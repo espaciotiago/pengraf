@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="pengrafApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Pengraf</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- css -->
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+    <!-- Js -->
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="node_modules/interactjs/dist/interact.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/showModals.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/loading.js"></script>
+</head>
+<body ng-controller="DashboardController" ng-init="initDashboard()">
+<!--------------------------------------------------------------------------------------------------------------------->
+<!-- Loader -->
+<!--------------------------------------------------------------------------------------------------------------------->
+<div class="loader loader-show" id="loader" ng-show="loading">
+    <div class="bubblingG">
+	        <span id="bubblingG_1">
+	        </span>
+        <span id="bubblingG_2">
+	        </span>
+        <span id="bubblingG_3">
+	        </span>
+    </div>
+</div>
+<!--------------------------------------------------------------------------------------------------------------------->
+<!-- Nav bar -->
+<!--------------------------------------------------------------------------------------------------------------------->
+<nav class="navbar navbar-expand-lg navbar-light">
+    <img src="img/logo.jpeg" alt="" height="40">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Reportes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Perfil</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--------------------------------------------------------------------------------------------------------------------->
+<!-- Content -->
+<!--------------------------------------------------------------------------------------------------------------------->
+<div class="container-fluid" id="con">
+    <div class="row">
+        <!--------------------------------------------------------------------------------------------------------------------->
+        <!-- Right bar -->
+        <!--------------------------------------------------------------------------------------------------------------------->
+        <div class="col-2 sidebar">
+            <div class="row block-header">
+                <h3 class="col-12">Bloques</h3>
+            </div>
+
+            <!--------------------------------------------------------------------------------------------------------------------->
+            <!-- List of blocks -->
+            <!--------------------------------------------------------------------------------------------------------------------->
+            <div class="row">
+                <!-- List of defaul blocks -->
+                <div class="col-12" ng-repeat="(key,value) in defaultBlocks">
+                    <div class="card block">
+                        <div class="card-body col-12" style="text-align: center">
+                            <div class="row card-title">
+                                <p class="col-10"  style="text-align: left"><b>{{value.name}}</b></p>
+                                <span class="fas fa-plus" data-toggle="modal" data-target="#newItemModal" ng-click="selectBlockToAdd($index)"></span>
+                            </div>
+                            <img src="{{value.image}}" alt="" width="100">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--------------------------------------------------------------------------------------------------------------------->
+        <!-- Center Content -->
+        <!--------------------------------------------------------------------------------------------------------------------->
+        <div class="col-8 content">
+            <!--------------------------------------------------------------------------------------------------------------------->
+            <!-- Zones -->
+            <!--------------------------------------------------------------------------------------------------------------------->
+            <div class="row">
+                <h2 class="offset-1 col-12">Zonas de la compañia</h2>
+                <!-- List of zones -->
+                <div class="col-1 offset-1">
+                    <span class="fas fa-plus fa-3x next-prev" data-toggle="modal" data-target="#newZoneModal"></span>
+                </div>
+                <div class="zones col-9">
+                    <span>
+                        <img src="img/zone-1.png" alt="" width="100" style="background: white">
+                    </span>
+                    <span>
+                        <img src="img/zone-2.png" alt="" width="100" style="background: white">
+                    </span>
+                    <span>
+                        <img src="img/zone-3.png" alt="" width="100" style="background: white">
+                    </span>
+                </div>
+            </div>
+
+            <!--------------------------------------------------------------------------------------------------------------------->
+            <!-- Zone container -->
+            <!--------------------------------------------------------------------------------------------------------------------->
+            <div class="row">
+                <br>
+                <h3 class="offset-1 col-12">Zona seleccionada</h3>
+            </div>
+            <div class="row" id="container-zone">
+                <div class="col-10 offset-1 droppable-container dropzone" id="dropzone">
+                </div>
+            </div>
+
+            <!--------------------------------------------------------------------------------------------------------------------->
+            <!-- Footer -->
+            <!--------------------------------------------------------------------------------------------------------------------->
+            <footer class="footer">
+                <div class="row">
+                    <p class="copyright col-12">Copyright © Pengraf 2018</p>
+                </div>
+            </footer>
+        </div>
+        <!--------------------------------------------------------------------------------------------------------------------->
+        <!-- Left bar -->
+        <!--------------------------------------------------------------------------------------------------------------------->
+        <div class="col-2 sidebar">
+            <div class="row block-header">
+                <h3 class="col-12">Pendientes</h3>
+            </div>
+
+            <!--------------------------------------------------------------------------------------------------------------------->
+            <!-- Selected item info -->
+            <!--------------------------------------------------------------------------------------------------------------------->
+            <div class="row">
+                <div class="col-12 item-info">
+                    <div class="row">
+                        <h4 class="col-10">Item seleccionado</h4>
+                        <span class="fas fa-plus" data-toggle="modal" data-target="#newPendingModal"></span>
+                    </div>
+                    <div class="row">
+                        <p><b>Zona a la que pertenece:</b> Lorem ipsum dolor sit amet</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A,
+                            aperiam atque esse, incidunt labore nesciunt nisi, nobis non quaerat quasi</p>
+                    </div>
+                    <!--------------------------------------------------------------------------------------------------------------------->
+                    <!-- List of penddings of that item -->
+                    <!--------------------------------------------------------------------------------------------------------------------->
+                    <div class="row">
+                        <!-- List of pendings of item -->
+                        <div class="card col-12 pending caducated">
+                            <div class="card-body col-12">
+                                <div class="row">
+                                    <h4 class="col-12">Lorem ipsum dolor sit amet, consectetur</h4>
+                                    <p class="col-6">@tmoreno</p>
+                                    <p class="col-6 date-end">yyyy-MM-dd</p>
+                                    <p class="col-12">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                        Accusantium eveniet facilis harum nihil nobis pariatur reiciendis reprehenderit
+                                        sit sunt voluptatibus. Amet fuga magni maiores, molestias nam omnis porro possimus saepe!
+                                    </p>
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <h4 class="col-10">Evidencia fotográfica</h4>
+                                            <span class="fas fa-eye fa-sm" onclick="showPics('pending_pics_01')" id="pending_pics_01_eye"></span>
+                                        </div>
+                                        <div class="row inactive" id="pending_pics_01">
+                                                <span class="col-6">
+                                                    <img src="img/testimg1.jpg" alt="" class="minmap">
+                                                </span>
+                                            <span class="col-6">
+                                                    <img src="img/testimg1.jpg" alt="" class="minmap">
+                                                </span>
+                                            <span class="col-6">
+                                                    <img src="img/testimg1.jpg" alt="" class="minmap">
+                                                </span>
+                                            <span class="col-6">
+                                                    <img src="img/testimg1.jpg" alt="" class="minmap">
+                                                </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card col-12 pending onprocess">
+                            <div class="card-body col-12">
+                                <div class="row">
+                                    <h4 class="col-12">Lorem ipsum dolor sit amet, consectetur</h4>
+                                    <p class="col-6">@tmoreno</p>
+                                    <p class="col-6 date-end">yyyy-MM-dd</p>
+                                    <p class="col-12">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                        Accusantium eveniet facilis harum nihil nobis pariatur reiciendis reprehenderit
+                                        sit sunt voluptatibus. Amet fuga magni maiores, molestias nam omnis porro possimus saepe!
+                                    </p>
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <h4 class="col-10">Evidencia fotográfica</h4>
+                                            <span class="fas fa-eye fa-sm" onclick="showPics('pending_pics_02')" id="pending_pics_02_eye"></span>
+                                        </div>
+                                        <div class="row inactive" id="pending_pics_02">
+                                                <span class="col-6">
+                                                    <img src="img/testimg1.jpg" alt="" class="minmap">
+                                                </span>
+                                            <span class="col-6">
+                                                    <img src="img/testimg1.jpg" alt="" class="minmap">
+                                                </span>
+                                            <span class="col-6">
+                                                    <img src="img/testimg1.jpg" alt="" class="minmap">
+                                                </span>
+                                            <span class="col-6">
+                                                    <img src="img/testimg1.jpg" alt="" class="minmap">
+                                                </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card col-12 pending completed">
+                            <div class="card-body col-12">
+                                <div class="row">
+                                    <h4 class="col-12">Lorem ipsum dolor sit amet, consectetur</h4>
+                                    <p class="col-6">@tmoreno</p>
+                                    <p class="col-6 date-end">yyyy-MM-dd</p>
+                                    <p class="col-12">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                        Accusantium eveniet facilis harum nihil nobis pariatur reiciendis reprehenderit
+                                        sit sunt voluptatibus. Amet fuga magni maiores, molestias nam omnis porro possimus saepe!
+                                    </p>
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <h4 class="col-10">Evidencia fotográfica</h4>
+                                            <span class="fas fa-eye fa-sm" onclick="showPics('pending_pics_03')" id="pending_pics_03_eye"></span>
+                                        </div>
+                                        <div class="row inactive" id="pending_pics_03">
+                                                <span class="col-6">
+                                                    <img src="img/testimg1.jpg" alt="" class="minmap">
+                                                </span>
+                                            <span class="col-6">
+                                                    <img src="img/testimg1.jpg" alt="" class="minmap">
+                                                </span>
+                                            <span class="col-6">
+                                                    <img src="img/testimg1.jpg" alt="" class="minmap">
+                                                </span>
+                                            <span class="col-6">
+                                                    <img src="img/testimg1.jpg" alt="" class="minmap">
+                                                </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------------------------------------------------------------------------------------------------------------------->
+<!-- Modals -->
+<!--------------------------------------------------------------------------------------------------------------------->
+<!-- Modal For new Zone-->
+<div class="modal fade" id="newZoneModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Nueva Zona</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Creada por: @tmoreno
+                </p>
+                <p>
+                    Fecha de creación: yyyy-MM-dd hh:mm:ss
+                </p>
+
+                <div class="input-u col-12">
+                    <input class="col-12" type="text" placeholder="Nombre de la zona">
+                </div>
+                <div class="input-u col-12">
+                    <textarea class="col-12" type="text" placeholder="Descripción" rows="3"></textarea>
+                </div>
+                <h3>Tipo de zona: </h3><p>{{zoneForCreation.name}}</p>
+                <!-- List of zone types -->
+                <div class="row zone-types">
+                    <div class="col-4" ng-repeat="(key,value) in defaultZones">
+                        <span ng-click="selectZoneType($index)">
+                            <img id="{{value.id}}" class="zone-type" src="{{value.image}}" alt="" width="100" style="background: white">
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal For new Item-->
+<div class="modal fade" id="newItemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Nuevo Item</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Zona: Zona seleccionada
+                </p>
+                <p>
+                    Item: Tipo de item/bloque
+                </p>
+                <p>
+                    Creada por: @tmoreno
+                </p>
+                <p>
+                    Fecha de creación: yyyy-MM-dd hh:mm:ss
+                </p>
+
+                <div class="input-u col-12">
+                    <input class="col-12" type="text" placeholder="Nombre de la zona">
+                </div>
+                <div class="input-u col-12">
+                    <textarea class="col-12" type="text" placeholder="Descripción" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" ng-click="addItem(20,20)" data-dismiss="modal">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal For new Pending-->
+<div class="modal fade" id="newPendingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Nuevo Pendiente</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Zona: Zona seleccionada
+                </p>
+                <p>
+                    Item: Nombre del item al que se añadirá el pendiente
+                </p>
+                <p>
+                    Creada por: @tmoreno
+                </p>
+                <p>
+                    Fecha de creación: yyyy-MM-dd hh:mm:ss
+                </p>
+
+                <div class="input-u col-12">
+                    <input class="col-12" type="text" placeholder="Nombre de la zona">
+                </div>
+                <div class="input-u col-12">
+                    <textarea class="col-12" type="text" placeholder="Descripción" rows="3"></textarea>
+                </div>
+                <div class="input-u col-12">
+                    <input class="col-12" type="text" placeholder="Asignado a... ">
+                </div>
+                <div class="input-u col-12">
+                    <input class="col-12" type="text" placeholder="Tipo de pendiente">
+                </div>
+                <div class="input-u col-12">
+                    <input class="col-10" type="text" placeholder="Fecha de cierre" onfocus="(this.type='date')">
+                    <i class="fas fa-calendar-alt col-1" style="margin-left: 30px"></i>
+                </div>
+                <h3>Evidencia fotográfica:</h3>
+                <!-- List of pictures uploades -->
+                <div class="col-12">
+                        <span class="custom-file-upload">
+                            <input type="file"/>
+                            <i class="fas fa-upload fa-2x"></i>
+                            <p>Agregar archivo</p>
+                        </span>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

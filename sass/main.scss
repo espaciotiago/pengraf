@@ -1,0 +1,220 @@
+@import "index";
+
+nav{
+  background: white;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.navbar{
+  padding: 10px;
+}
+
+.title{
+  text-shadow: 0.01px 0.01px 0.01px #000;
+  font-weight: bold;
+}
+
+.content{
+  margin-top: 20px;
+}
+
+.sidebar{
+  background: #fefefe;
+  height: 92vh;
+  overflow-y: scroll;
+  overflow-x: auto;
+  padding: 0px;
+  .block-header{
+    background: $main-color;
+    h3{
+      color: white;
+      font-size: 24px;
+      text-shadow: 1px 0px 0px #000;
+      text-align: center;
+
+    }
+  }
+
+  .block{
+    margin: 8px;
+
+    span{
+      color: $darker-grey-color;
+    }
+    p{
+      color: $darker-grey-color;
+    }
+  }
+  .item-info{
+    padding: 8px 40px 8px 40px;
+    color: $darker-grey-color;
+    p{
+      font-size: 12px;
+    }
+  }
+
+  h4{
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .card-body{
+    padding: 8px;
+  }
+  .caducated{
+    border-left: 10px solid $red-pending-color;
+  }
+  .completed{
+    border-left: 10px solid $green-pending-color;
+  }
+  .onprocess{
+    border-left: 10px solid $yellow-pending-color;
+  }
+  .pending{
+    margin-top: 10px;
+    padding: 0px;
+    color: $darker-grey-color;
+    p{
+      font-size: 10px;
+      text-align: justify;
+    }
+    h4{
+      font-size: 12px;
+    }
+    .date-end{
+      text-align: end;
+    }
+    .active{
+      display: flex;
+    }
+    .inactive{
+      display: none;
+    }
+    .minmap{
+      width: 80px;
+    }
+  }
+}
+.droppable-container{
+  background: white;
+  height: 60%;
+  border: 1px dotted $darker-grey-color;
+  position: absolute;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
+.drag-1 {
+  top: 20px;
+  left: 20px;
+  position: absolute;
+  padding-top: 8px;
+  border: 1px solid $dark-grey-color;
+  color: white;
+  border-radius: 0.75em;
+  user-select: none;
+  -webkit-transform: translate(0px, 0px);
+  transform: translate(0px, 0px);
+}
+
+.footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  p{
+    margin-top: 10px;
+  }
+}
+
+.zones{
+  //text-align: center;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.add-zone{
+  background: white;
+}
+
+.next-prev{
+  margin-top: 20px;
+  color: $dark-grey-color;
+}
+
+#newZoneModal{
+  .modal-content{
+    border-top: 15px solid $main-color;
+  }
+}
+
+#newItemModal{
+  .modal-content{
+    border-top: 15px solid $yellow-pending-color;
+  }
+}
+
+#newPendingModal{
+  .modal-content{
+    border-top: 15px solid $red-pending-color;
+  }
+}
+
+.modal{
+  p{
+    margin-top: -10px;
+    font-size: 12px;
+    color: $dark-grey-color;
+  }
+  h3{
+    font-size: 16px;
+    margin-top: 15px;
+  }
+  span{
+    color: $darker-grey-color;
+  }
+  .custom-file-upload {
+    margin-top: 10px;
+    border: 1px solid $main-color;
+    background: $main-color;
+    color: white;
+    display: inline-block;
+    padding: 8px 8px 0px 8px;
+    cursor: pointer;
+    text-align: center;
+    align-content: center;
+    align-items: center;
+
+    p{
+      margin-top: 5px;
+      color: white;
+      font-size: 12px;
+    }
+  }
+  .custom-file-upload:hover{
+    border: 1px solid $main-color-dark;
+    background: $main-color-dark;
+  }
+  input[type="file"] {
+    display: none;
+  }
+  .zone-type{
+    border: 1px solid $dark-grey-color;
+  }
+  .zone-type-selected{
+    border: 2px solid $main-color;
+  }
+  .btn-primary{
+    background: $main-color;
+    border-color: $main-color;
+  }
+  .btn-primary:hover{
+    background: $main-color-dark;
+    border-color: $main-color-dark;
+  }
+  .btn-secondary{
+    background: $red-pending-color;
+    border-color: $red-pending-color;
+  }
+  .btn-secondary:hover{
+    background: $red-pending-color-dark;
+    border-color: $red-pending-color-dark;
+  }
+}

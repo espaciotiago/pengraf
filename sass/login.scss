@@ -1,0 +1,27 @@
+@import "index";
+
+.btn-primary{
+  background: $main-color;
+  border-color: $main-color;
+}
+
+.btn-primary:hover{
+  background: $main-color-dark;
+  border-color: $main-color-dark;
+}
+
+.main-card{
+  margin-top:10%;
+  margin-left: 40%;
+  padding: 8px;
+}
+
+.login{
+  padding: 16px;
+}
+.forget{
+  text-align: center;
+  color: $darker-grey-color;
+  font-size: 12px;
+  margin-top: -30px;
+}
