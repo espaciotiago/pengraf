@@ -1,6 +1,8 @@
 /**
  * Created by Tiago on 19/11/18.
  */
+hideLoader();
+
 
 function hideLoader() {
     setTimeout(function () {

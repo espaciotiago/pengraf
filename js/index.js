@@ -2,35 +2,44 @@
  * Created by Tiago on 1/11/18.
  */
 /**--------------------------------------------------------------------------------------------------------------------
- * Actions of the elements on the dragin and dropping zone
+ * Auxiliar methods
+ --------------------------------------------------------------------------------------------------------------------*/
+var fullScreen = false;
+function setFullScreen() {
+    let right = document.getElementById("right");
+    let center = document.getElementById("center");
+    let left = document.getElementById("left");
+
+    if(fullScreen){
+        left.setAttribute("class","col-2 sidebar not-fullscreen");
+        right.setAttribute("class","col-2 sidebar");
+    }else{
+        left.setAttribute("class","fullscreen sidebar");
+        right.setAttribute("class","col-4 sidebar");
+    }
+    fullScreen = !fullScreen;
+}
+
+
+/**--------------------------------------------------------------------------------------------------------------------
+ * Actions of the elements on the draging and dropping zone
  --------------------------------------------------------------------------------------------------------------------*/
 var items = 0;
-var showing = false;
-var testBlockSelected = 0;
-
-
-/**
- * TODO To test only - Set the selction block
- */
-function clicTestItem1() {
-    testBlockSelected = 1;
-}
-function clicTestItem2() {
-    testBlockSelected = 2;
-}
 
 /**
  * Removes an item given its element id
  */
 function removeItem(id) {
-    console.log("Removing ...", id.id);
     id.remove();
 }
 /**
  * When click on a item and show the details
  */
-function clickOnItem() {
-    console.log("OnCLick");
+function clickOnItem(blockId) {
+    var scope = angular.element($("#dropzone")).scope();
+    scope.safeApply(function(){
+        scope.getPendingsOfBlock(blockId.id.split("_")[1]);
+    })
 }
 
 /**--------------------------------------------------------------------------------------------------------------------
@@ -60,13 +69,10 @@ interact('.draggable')
                 y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
 
             //X and y are the displacement pixels so, the new position are: oldX + x and oldY + y
-            //console.log("PosX",x);
-            //console.log("PosY",x);
-            //addItem(140+x,100+y);
-            //Get the target DOM id
-            console.log("Target",target.id);
-            showLoader();
-            hideLoader();
+            var scope = angular.element($("#dropzone")).scope();
+            scope.safeApply(function(){
+                scope.onMoveItem(target,x,y);
+            });
         }
     });
 
@@ -84,6 +90,8 @@ function dragMoveListener (event) {
     // update the posiion attributes
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
+
+    console.log("DRAG",target);
 }
 
 // this is used later in the resizing and gesture demos
@@ -94,22 +102,11 @@ window.dragMoveListener = dragMoveListener;
  --------------------------------------------------------------------------------------------------------------------*/
 Element.prototype.remove = function() {
     this.parentElement.removeChild(this);
-}
+};
 NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
     for(var i = this.length - 1; i >= 0; i--) {
         if(this[i] && this[i].parentElement) {
             this[i].parentElement.removeChild(this[i]);
         }
     }
-}
-
-function showPics(id) {
-    if(showing){
-        document.getElementById(id).setAttribute("class","row inactive");
-        //document.getElementById(id+"_eye").setAttribute("class","row fas fa-eye fa-sm");
-    }else{
-        document.getElementById(id).setAttribute("class","row active");
-        //document.getElementById(id+"_eye").setAttribute("class","row fas fa-eye-slash fa-sm");
-    }
-    showing = !showing;
-}
+};

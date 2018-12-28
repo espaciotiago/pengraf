@@ -1,0 +1,111 @@
+@import "index";
+nav{
+  background: white;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.navbar{
+  padding: 10px;
+}
+
+.title{
+  text-shadow: 0.01px 0.01px 0.01px #000;
+  font-weight: bold;
+}
+
+.content{
+  h1{
+    margin-top: 20px;
+  }
+}
+
+.area{
+  height: 200px;
+  max-height: 200px;
+  color: $darker-grey-color;
+  p{
+    max-height: 100px;
+    overflow: hidden;
+  }
+  a{
+    color: $darker-grey-color;
+    text-decoration: none;
+  }
+}
+.card{
+  margin-top: 20px;
+
+  span{
+    text-align: center;
+    align-content: center;
+  }
+}
+.add{
+  h2{
+    color: white;
+  }
+  .card{
+    background: $main-color;
+    color: white;
+  }
+  .card:hover{
+    background: $main-color-dark;
+    border: 2px solid rgba(0, 0, 0, 0.125);
+  }
+  .card-title{
+    align-content: center;
+    text-align: center;
+  }
+}
+.card:hover{
+  border: 3px solid rgba(0, 0, 0, 0.125);
+}
+.footer {
+  width: 100%;
+  bottom: 0px;
+  p{
+    margin-top: 10px;
+  }
+}
+
+#newZoneModal{
+  .modal-content{
+    border-top: 15px solid $main-color;
+  }
+}
+
+.modal{
+  p{
+    margin-top: -10px;
+    font-size: 12px;
+    color: $dark-grey-color;
+  }
+  h3{
+    font-size: 16px;
+    margin-top: 15px;
+  }
+  span{
+    color: $darker-grey-color;
+  }
+  .zone-type{
+    border: 1px solid $dark-grey-color;
+  }
+  .zone-type-selected{
+    border: 2px solid $main-color;
+  }
+  .btn-primary{
+    background: $main-color;
+    border-color: $main-color;
+  }
+  .btn-primary:hover{
+    background: $main-color-dark;
+    border-color: $main-color-dark;
+  }
+  .btn-secondary{
+    background: $red-pending-color;
+    border-color: $red-pending-color;
+  }
+  .btn-secondary:hover{
+    background: $red-pending-color-dark;
+    border-color: $red-pending-color-dark;
+  }
+}
