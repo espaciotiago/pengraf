@@ -1,2 +1,177 @@
 @import "index";
 
+nav{
+  background: white;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.navbar{
+  padding: 10px;
+}
+
+.title{
+  text-shadow: 0.01px 0.01px 0.01px #000;
+  font-weight: bold;
+}
+
+.content{
+  margin-top: 20px;
+}
+
+.footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  p{
+    margin-top: 10px;
+    padding-right: 40px;
+  }
+}
+
+.copyright{
+  text-align: end;
+  color: $darker-grey-color;
+  font-size: 12px;
+}
+
+.absolute-bar{
+  position: absolute;
+  height: 90%;
+  overflow: scroll;
+  padding: 8px;
+}
+
+.stats{
+
+}
+
+.reports{
+  position: absolute;
+  height: 85.5%;
+  padding: 8px;
+  .pendings-card{
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    overflow: scroll;
+
+    .pending {
+      padding: 0px;
+      padding-top: 10px;
+      color: $darker-grey-color;
+
+      p {
+        margin-top: -8px;
+        font-size: 10px;
+        text-align: justify;
+      }
+
+      h4 {
+        font-size: 14px;
+      }
+
+      .date-end {
+        text-align: end;
+      }
+
+      .active {
+        display: flex;
+      }
+
+      .inactive {
+        display: none;
+      }
+
+      .text{
+        margin-top: -10px;
+      }
+
+      .minmap {
+        width: 80px;
+      }
+    }
+  }
+
+}
+
+.single-report{
+  position: absolute;
+  height: 80%;
+  padding: 8px;
+  .pending-card{
+    margin: 0px;
+    padding: 0px;
+    max-height: 100%;
+    overflow: scroll;
+    .pending {
+      padding: 0px;
+      padding-top: 10px;
+      color: $darker-grey-color;
+
+      p {
+        font-size: 12px;
+        text-align: justify;
+      }
+
+      h4 {
+        font-size: 16px;
+      }
+
+      .date-end {
+        text-align: end;
+      }
+
+      .text{
+        margin-top: -10px;
+      }
+
+      .actions{
+        margin: 0px;
+        padding: 0px;
+        margin-bottom: 8px;
+        align-content: end;
+        text-align: end;
+        .btn-primary{
+          background: $green-pending-color;
+          border-color: $green-pending-color;
+        }
+        .btn-primary:hover{
+          background: $green-pending-color-dark;
+          border-color: $green-pending-color-dark;
+        }
+        .btn-secondary{
+          background: $red-pending-color;
+          border-color: $red-pending-color;
+        }
+        .btn-secondary:hover{
+          background: $red-pending-color-dark;
+          border-color: $red-pending-color-dark;
+        }
+      }
+    }
+    .pending-description{
+      margin-top: 10px;
+      color: $darker-grey-color;
+      p {
+        font-size: 12px;
+        text-align: justify;
+      }
+      h4 {
+        font-size: 14px;
+      }
+      .minmap{
+        height: 80px;
+      }
+    }
+  }
+}
+
+.caducated{
+  border-left: 10px solid $red-pending-color;
+}
+.completed{
+  border-left: 10px solid $green-pending-color;
+}
+.onprocess{
+  border-left: 10px solid $yellow-pending-color;
+}

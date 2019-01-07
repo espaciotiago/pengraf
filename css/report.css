@@ -221,4 +221,164 @@ span {
   }
 }
 
+nav {
+  background: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+  padding: 10px;
+}
+
+.title {
+  text-shadow: 0.01px 0.01px 0.01px #000;
+  font-weight: bold;
+}
+
+.content {
+  margin-top: 20px;
+}
+
+.footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+}
+.footer p {
+  margin-top: 10px;
+  padding-right: 40px;
+}
+
+.copyright {
+  text-align: end;
+  color: #7f8080;
+  font-size: 12px;
+}
+
+.absolute-bar {
+  position: absolute;
+  height: 90%;
+  overflow: scroll;
+  padding: 8px;
+}
+
+.reports {
+  position: absolute;
+  height: 85.5%;
+  padding: 8px;
+}
+.reports .pendings-card {
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  overflow: scroll;
+}
+.reports .pendings-card .pending {
+  padding: 0px;
+  padding-top: 10px;
+  color: #7f8080;
+}
+.reports .pendings-card .pending p {
+  margin-top: -8px;
+  font-size: 10px;
+  text-align: justify;
+}
+.reports .pendings-card .pending h4 {
+  font-size: 14px;
+}
+.reports .pendings-card .pending .date-end {
+  text-align: end;
+}
+.reports .pendings-card .pending .active {
+  display: flex;
+}
+.reports .pendings-card .pending .inactive {
+  display: none;
+}
+.reports .pendings-card .pending .text {
+  margin-top: -10px;
+}
+.reports .pendings-card .pending .minmap {
+  width: 80px;
+}
+
+.single-report {
+  position: absolute;
+  height: 80%;
+  padding: 8px;
+}
+.single-report .pending-card {
+  margin: 0px;
+  padding: 0px;
+  max-height: 100%;
+  overflow: scroll;
+}
+.single-report .pending-card .pending {
+  padding: 0px;
+  padding-top: 10px;
+  color: #7f8080;
+}
+.single-report .pending-card .pending p {
+  font-size: 12px;
+  text-align: justify;
+}
+.single-report .pending-card .pending h4 {
+  font-size: 16px;
+}
+.single-report .pending-card .pending .date-end {
+  text-align: end;
+}
+.single-report .pending-card .pending .text {
+  margin-top: -10px;
+}
+.single-report .pending-card .pending .actions {
+  margin: 0px;
+  padding: 0px;
+  margin-bottom: 8px;
+  align-content: end;
+  text-align: end;
+}
+.single-report .pending-card .pending .actions .btn-primary {
+  background: #4E7220;
+  border-color: #4E7220;
+}
+.single-report .pending-card .pending .actions .btn-primary:hover {
+  background: #39571a;
+  border-color: #39571a;
+}
+.single-report .pending-card .pending .actions .btn-secondary {
+  background: #BA583A;
+  border-color: #BA583A;
+}
+.single-report .pending-card .pending .actions .btn-secondary:hover {
+  background: #ba332b;
+  border-color: #ba332b;
+}
+.single-report .pending-card .pending-description {
+  margin-top: 10px;
+  color: #7f8080;
+}
+.single-report .pending-card .pending-description p {
+  font-size: 12px;
+  text-align: justify;
+}
+.single-report .pending-card .pending-description h4 {
+  font-size: 14px;
+}
+.single-report .pending-card .pending-description .minmap {
+  height: 80px;
+}
+
+.caducated {
+  border-left: 10px solid #BA583A;
+}
+
+.completed {
+  border-left: 10px solid #4E7220;
+}
+
+.onprocess {
+  border-left: 10px solid #F2D633;
+}
+
 /*# sourceMappingURL=report.css.map */

@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
     <link rel="stylesheet" href="node_modules/alertifyjs/build/css/alertify.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/report.css">
+
     <!-- Js -->
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
@@ -19,12 +20,13 @@
     <script src="node_modules/interactjs/dist/interact.js"></script>
     <script src="node_modules/alertifyjs/build/alertify.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="node_modules/chart.js/dist/Chart.js"></script>
     <script src="js/index.js"></script>
     <script src="js/showModals.js"></script>
     <script src="js/app.js"></script>
     <script src="js/loading.js"></script>
 </head>
-<body ng-controller="ReportsController">
+<body ng-controller="ReportsController" ng-init="initRports()">
 <!--------------------------------------------------------------------------------------------------------------------->
 <!-- Loader -->
 <!--------------------------------------------------------------------------------------------------------------------->
@@ -53,9 +55,314 @@
                 <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
             </li>
             -->
+            <li class="nav-item">
+                <a class="nav-link" href="./dashboard.html"><i class="fas fa-bars"></i></a>
+            </li>
         </ul>
     </div>
 </nav>
+<!--------------------------------------------------------------------------------------------------------------------->
+<!-- Content -->
+<!--------------------------------------------------------------------------------------------------------------------->
+<div class="container-fluid">
+    <div class="row">
+        <!--------------------------------------------------------------------------------------------------------------------->
+        <!-- Stats bar -->
+        <!--------------------------------------------------------------------------------------------------------------------->
+        <div class="col-3 stats absolute-bar">
+            <h3 class="col-12"><b>Estadisticas generales</b></h3>
+
+            <div class="card col-12">
+                <div class="card-body col-12">
+                    <div class="row">
+                        <div class="card-title">
+                            <p class="col-12"><b>Pendientes completados</b></p>
+                        </div>
+                        <canvas id="pendingStats" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card col-12" style="margin-top: 10px">
+                <div class="card-body col-12">
+                    <div class="row">
+                        <div class="card-title">
+                            <p class="col-12"><b>Timeline de pendientes</b></p>
+                        </div>
+                        <canvas id="timelineStats" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--------------------------------------------------------------------------------------------------------------------->
+        <!-- Reports list-->
+        <!--------------------------------------------------------------------------------------------------------------------->
+        <div class="col-5 offset-3 reports">
+            <h3 class="col-12"><b>Lista de pendientes</b></h3>
+            <div class="card col-12 pendings-card" style="margin-top: 10px">
+                <div class="card-body col-12">
+                    <!-- List of pendings -->
+                    <span>
+                        <div class="col-12 pending completed">
+                            <div class="col-12">
+                                <div class="row">
+                                    <h4 class="col-12">
+                                        <i class="fas fa-star"></i>
+                                        <b>Titulo del pendiente</b></h4>
+                                    <p class="col-6">@responsable</p>
+                                    <p class="col-6 date-end">yyyy-mm-dd</p>
+                                    <p class="col-12 text"><b>Area: </b>Area 51</p>
+                                    <p class="col-12 text"><b>Zona: </b>Zona de producción</p>
+                                </div>
+                                <hr style="margin: 0px;padding: 0px; margin-left: -15px;margin-right: -15px">
+                            </div>
+                        </div>
+                    </span>
+                    <span>
+                        <div class="col-12 pending onprocess">
+                            <div class="col-12">
+                                <div class="row">
+                                    <h4 class="col-12">
+                                        <i class="fas fa-project-diagram"></i>
+                                        <b>Titulo del pendiente</b></h4>
+                                    <p class="col-6">@responsable</p>
+                                    <p class="col-6 date-end">yyyy-mm-dd</p>
+                                    <p class="col-12 text"><b>Area: </b>Area 51</p>
+                                    <p class="col-12 text"><b>Zona: </b>Zona de producción</p>
+                                </div>
+                                <hr style="margin: 0px;padding: 0px; margin-left: -15px;margin-right: -15px">
+                            </div>
+                        </div>
+                    </span>
+                    <span>
+                        <div class="col-12 pending caducated">
+                            <div class="col-12">
+                                <div class="row">
+                                    <h4 class="col-12">
+                                        <i class="fas fa-check-circle"></i>
+                                        <b>Titulo del pendiente</b></h4>
+                                    <p class="col-6">@responsable</p>
+                                    <p class="col-6 date-end">yyyy-mm-dd</p>
+                                    <p class="col-12 text"><b>Area: </b>Area 51</p>
+                                    <p class="col-12 text"><b>Zona: </b>Zona de producción</p>
+                                </div>
+                                <hr style="margin: 0px;padding: 0px; margin-left: -15px;margin-right: -15px">
+                            </div>
+                        </div>
+                    </span>
+                    <span>
+                        <div class="col-12 pending completed">
+                            <div class="col-12">
+                                <div class="row">
+                                    <h4 class="col-12">
+                                        <i class="fas fa-circle"></i>
+                                        <b>Titulo del pendiente</b></h4>
+                                    <p class="col-6">@responsable</p>
+                                    <p class="col-6 date-end">yyyy-mm-dd</p>
+                                    <p class="col-12 text"><b>Area: </b>Area 51</p>
+                                    <p class="col-12 text"><b>Zona: </b>Zona de producción</p>
+                                </div>
+                                <hr style="margin: 0px;padding: 0px; margin-left: -15px;margin-right: -15px">
+                            </div>
+                        </div>
+                    </span>
+                    <span>
+                        <div class="col-12 pending completed">
+                            <div class="col-12">
+                                <div class="row">
+                                    <h4 class="col-12">
+                                        <i class="fas fa-star"></i>
+                                        <b>Titulo del pendiente</b></h4>
+                                    <p class="col-6">@responsable</p>
+                                    <p class="col-6 date-end">yyyy-mm-dd</p>
+                                    <p class="col-12 text"><b>Area: </b>Area 51</p>
+                                    <p class="col-12 text"><b>Zona: </b>Zona de producción</p>
+                                </div>
+                                <hr style="margin: 0px;padding: 0px; margin-left: -15px;margin-right: -15px">
+                            </div>
+                        </div>
+                    </span>
+                    <span>
+                        <div class="col-12 pending onprocess">
+                            <div class="col-12">
+                                <div class="row">
+                                    <h4 class="col-12">
+                                        <i class="fas fa-project-diagram"></i>
+                                        <b>Titulo del pendiente</b></h4>
+                                    <p class="col-6">@responsable</p>
+                                    <p class="col-6 date-end">yyyy-mm-dd</p>
+                                    <p class="col-12 text"><b>Area: </b>Area 51</p>
+                                    <p class="col-12 text"><b>Zona: </b>Zona de producción</p>
+                                </div>
+                                <hr style="margin: 0px;padding: 0px; margin-left: -15px;margin-right: -15px">
+                            </div>
+                        </div>
+                    </span>
+                    <span>
+                        <div class="col-12 pending caducated">
+                            <div class="col-12">
+                                <div class="row">
+                                    <h4 class="col-12">
+                                        <i class="fas fa-check-circle"></i>
+                                        <b>Titulo del pendiente</b></h4>
+                                    <p class="col-6">@responsable</p>
+                                    <p class="col-6 date-end">yyyy-mm-dd</p>
+                                    <p class="col-12 text"><b>Area: </b>Area 51</p>
+                                    <p class="col-12 text"><b>Zona: </b>Zona de producción</p>
+                                </div>
+                                <hr style="margin: 0px;padding: 0px; margin-left: -15px;margin-right: -15px">
+                            </div>
+                        </div>
+                    </span>
+                    <span>
+                        <div class="col-12 pending completed">
+                            <div class="col-12">
+                                <div class="row">
+                                    <h4 class="col-12">
+                                        <i class="fas fa-circle"></i>
+                                        <b>Titulo del pendiente</b></h4>
+                                    <p class="col-6">@responsable</p>
+                                    <p class="col-6 date-end">yyyy-mm-dd</p>
+                                    <p class="col-12 text"><b>Area: </b>Area 51</p>
+                                    <p class="col-12 text"><b>Zona: </b>Zona de producción</p>
+                                </div>
+                                <hr style="margin: 0px;padding: 0px; margin-left: -15px;margin-right: -15px">
+                            </div>
+                        </div>
+                    </span>
+                    <span>
+                        <div class="col-12 pending completed">
+                            <div class="col-12">
+                                <div class="row">
+                                    <h4 class="col-12">
+                                        <i class="fas fa-star"></i>
+                                        <b>Titulo del pendiente</b></h4>
+                                    <p class="col-6">@responsable</p>
+                                    <p class="col-6 date-end">yyyy-mm-dd</p>
+                                    <p class="col-12 text"><b>Area: </b>Area 51</p>
+                                    <p class="col-12 text"><b>Zona: </b>Zona de producción</p>
+                                </div>
+                                <hr style="margin: 0px;padding: 0px; margin-left: -15px;margin-right: -15px">
+                            </div>
+                        </div>
+                    </span>
+                    <span>
+                        <div class="col-12 pending onprocess">
+                            <div class="col-12">
+                                <div class="row">
+                                    <h4 class="col-12">
+                                        <i class="fas fa-project-diagram"></i>
+                                        <b>Titulo del pendiente</b></h4>
+                                    <p class="col-6">@responsable</p>
+                                    <p class="col-6 date-end">yyyy-mm-dd</p>
+                                    <p class="col-12 text"><b>Area: </b>Area 51</p>
+                                    <p class="col-12 text"><b>Zona: </b>Zona de producción</p>
+                                </div>
+                                <hr style="margin: 0px;padding: 0px; margin-left: -15px;margin-right: -15px">
+                            </div>
+                        </div>
+                    </span>
+                    <span>
+                        <div class="col-12 pending caducated">
+                            <div class="col-12">
+                                <div class="row">
+                                    <h4 class="col-12">
+                                        <i class="fas fa-check-circle"></i>
+                                        <b>Titulo del pendiente</b></h4>
+                                    <p class="col-6">@responsable</p>
+                                    <p class="col-6 date-end">yyyy-mm-dd</p>
+                                    <p class="col-12 text"><b>Area: </b>Area 51</p>
+                                    <p class="col-12 text"><b>Zona: </b>Zona de producción</p>
+                                </div>
+                                <hr style="margin: 0px;padding: 0px; margin-left: -15px;margin-right: -15px">
+                            </div>
+                        </div>
+                    </span>
+                    <span>
+                        <div class="col-12 pending completed">
+                            <div class="col-12">
+                                <div class="row">
+                                    <h4 class="col-12">
+                                        <i class="fas fa-circle"></i>
+                                        <b>Titulo del pendiente</b></h4>
+                                    <p class="col-6">@responsable</p>
+                                    <p class="col-6 date-end">yyyy-mm-dd</p>
+                                    <p class="col-12 text"><b>Area: </b>Area 51</p>
+                                    <p class="col-12 text"><b>Zona: </b>Zona de producción</p>
+                                </div>
+                                <hr style="margin: 0px;padding: 0px; margin-left: -15px;margin-right: -15px">
+                            </div>
+                        </div>
+                    </span>
+
+                </div>
+            </div>
+        </div>
+        <!--------------------------------------------------------------------------------------------------------------------->
+        <!-- Single report description-->
+        <!--------------------------------------------------------------------------------------------------------------------->
+        <div class="col-4 offset-8 single-report">
+            <h3 class="col-12"><b>Pendiente seleccionado</b></h3>
+            <div class="card col-12 pending-card" style="margin-top: 10px">
+                <div class="card-body">
+                    <div class="col-12 pending completed">
+                        <div class="col-12">
+                            <div class="row">
+                                <h4 class="col-12">
+                                    <i class="fas fa-star"></i>
+                                    <b>Titulo del pendiente</b></h4>
+                                <p class="col-6">@responsable</p>
+                                <p class="col-6 date-end">yyyy-mm-dd</p>
+                                <p class="col-12 text"><b>Area: </b>Area 51</p>
+                                <p class="col-12 text"><b>Zona: </b>Zona de producción</p>
+                            </div>
+                            <div class="actions">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary">Completar</button>
+                            </div>
+                            <hr style="margin: 0px;padding: 0px; margin-left: -15px;margin-right: -15px">
+                        </div>
+                    </div>
+                    <div class="row pending-description">
+                        <div class="col-12">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt, dolore est eum ex ipsa iure iusto mollitia nihil nisi officiis omnis pariatur qui quis ratione reiciendis sed veniam veritatis vitae!
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt, dolore est eum ex ipsa iure iusto mollitia nihil nisi officiis omnis pariatur qui quis ratione reiciendis sed veniam veritatis vitae!
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt, dolore est eum ex ipsa iure iusto mollitia nihil nisi officiis omnis pariatur qui quis ratione reiciendis sed veniam veritatis vitae!
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt, dolore est eum ex ipsa iure iusto mollitia nihil nisi officiis omnis pariatur qui quis ratione reiciendis sed veniam veritatis vitae!
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt, dolore est eum ex ipsa iure iusto mollitia nihil nisi officiis omnis pariatur qui quis ratione reiciendis sed veniam veritatis vitae!
+                            </p>
+
+                            <h4><b>Evidencia fotográfica</b></h4>
+
+                            <span class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                                <img src="./img/testimg1.jpg" alt="" class="minmap">
+                            </span>
+                            <span class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                                <img src="./img/testimg1.jpg" alt="" class="minmap">
+                            </span>
+                            <span class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                                <img src="./img/testimg1.jpg" alt="" class="minmap">
+                            </span>
+                            <span class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                                <img src="./img/testimg1.jpg" alt="" class="minmap">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------------------------------------------------------------------------------------------------------------------->
+<!-- Footer -->
+<!--------------------------------------------------------------------------------------------------------------------->
+<footer class="footer">
+    <div class="row">
+        <p class="copyright col-12">Copyright © Pengraf 2018</p>
+    </div>
+</footer>
 
 </body>
 </html>
