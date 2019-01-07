@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="pengrafApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Pengraf</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- css -->
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+    <link rel="stylesheet" href="node_modules/alertifyjs/build/css/alertify.css">
+    <link rel="stylesheet" href="css/main.css">
+    <!-- Js -->
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="node_modules/interactjs/dist/interact.js"></script>
+    <script src="node_modules/alertifyjs/build/alertify.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/showModals.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/loading.js"></script>
+</head>
+<body ng-controller="ReportsController">
+<!--------------------------------------------------------------------------------------------------------------------->
+<!-- Loader -->
+<!--------------------------------------------------------------------------------------------------------------------->
+<div class="loader loader-show" id="loader" ng-show="loading">
+    <div class="bubblingG">
+	        <span id="bubblingG_1">
+	        </span>
+        <span id="bubblingG_2">
+	        </span>
+        <span id="bubblingG_3">
+	        </span>
+    </div>
+</div>
+<!--------------------------------------------------------------------------------------------------------------------->
+<!-- Nav bar -->
+<!--------------------------------------------------------------------------------------------------------------------->
+<nav class="navbar navbar-expand-lg navbar-light">
+    <img src="img/logo.png" alt="" height="40">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav ml-auto">
+            <!--
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
+            </li>
+            -->
+        </ul>
+    </div>
+</nav>
+
+</body>
+</html>

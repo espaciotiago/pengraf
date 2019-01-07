@@ -33,6 +33,24 @@ function parse_query_string(query) {
     return query_string;
 }
 
+/**
+ * Reads an uploaded image and gets the base 64
+ * @param input
+ */
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            console.log("IMAGE SELCTED",e.target.result);
+            var scope = angular.element($("#newPendingModal")).scope();
+            scope.safeApply(function(){
+                scope.addImageToUploadForPending(e.target.result)
+            });
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
 
 /**
  * Controller for the Login screen
@@ -130,9 +148,26 @@ app.controller("DashboardController",function ($scope,$http) {
     $scope.zoneForCreation = {};
     $scope.blockForCreation = {};
     $scope.pendingForCreationTypeText = "Tipo de pendiente"
-    $scope.pendingForCreationType = 0
-    $scope.pendingForCreationTypeImg = ""
+    $scope.pendingForCreationType = 0;
+    $scope.pendingForCreationTypeImg = "";
+    $scope.pendingForCreationImages = [];
     $scope.areaId;
+
+    /**
+     * Reset the prevalues for the creations of new objects
+     */
+    function resetPendingForCreation(){
+        $scope.pendingForCreationTypeText = "Tipo de pendiente"
+        $scope.pendingForCreationType = 0;
+        $scope.pendingForCreationTypeImg = "";
+        $scope.pendingForCreationImages = [];
+    }
+    function resetBlockForCreation(){
+        $scope.blockForCreation = {};
+    }
+    function resetZoneForCreation(){
+        $scope.blockForCreation = {};
+    }
 
     /**
      * Safe apply
@@ -600,6 +635,18 @@ app.controller("DashboardController",function ($scope,$http) {
                 break
         }
     }
+
+    /**
+     * Adds an image to the array of images for creation of a new pending
+     * @param image
+     */
+    $scope.addImageToUploadForPending = function (image) {
+        if($scope.pendingForCreationImages.length<4) {
+            $scope.pendingForCreationImages.push(image);
+        }else{
+            alertify.warning("Solo se pueden adjuntar 4 archivos");
+        }
+    }
     
 },"DashboardController");
 
@@ -609,3 +656,6 @@ app.controller("DashboardController",function ($scope,$http) {
 //----------------------------------------------------------------------------------------------------------------------
 // Reports Controller
 //----------------------------------------------------------------------------------------------------------------------
+app.controller("ReportsController",function ($scope,$http) {
+
+});
