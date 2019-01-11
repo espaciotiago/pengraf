@@ -236,13 +236,121 @@ app.controller("DashboardController",function ($scope,$http) {
                 id:"001B",
                 name:"Mesa de verificación de producto",
                 description:"Mesa de verificación de calidad del producto",
-                image:"img/item-block-1.png"
+                image:"img/item-block-1.jpeg"
             },
             {
                 id:"002B",
                 name:"Camion de emablaje",
                 description:"Camion de embalaje de producto",
-                image:"img/item-block-2.png"
+                image:"img/item-block-2.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-3.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-4.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-5.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-6.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-7.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-8.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-2.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-9.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-10.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-11.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-12.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-13.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-14.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-15.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-16.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-17.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-18.jpeg"
+            },
+            {
+                id:"002B",
+                name:"Camion de emablaje",
+                description:"Camion de embalaje de producto",
+                image:"img/item-block-19.jpeg"
             },
         ];
         $scope.zones = [
@@ -260,7 +368,7 @@ app.controller("DashboardController",function ($scope,$http) {
                         posy:40,
                         name:"Mesa de verificación de producto 1",
                         description:"Mesa de verificación de calidad del producto",
-                        image:"img/item-block-2.png",
+                        image:"img/item-block-2.jpeg",
                         total_pendings:0,
                     },
                     {
@@ -270,7 +378,7 @@ app.controller("DashboardController",function ($scope,$http) {
                         posy:100,
                         name:"Mesa de verificación de producto 2",
                         description:"Mesa de verificación de calidad del producto",
-                        image:"img/item-block-1.png",
+                        image:"img/item-block-1.jpeg",
                         total_pendings:1,
                     },
                 ]
@@ -289,7 +397,7 @@ app.controller("DashboardController",function ($scope,$http) {
                         posy:49,
                         name:"Mesa de verificación de producto 3",
                         description:"Mesa de verificación de calidad del producto",
-                        image:"img/item-block-1.png",
+                        image:"img/item-block-1.jpeg",
                         total_pendings:14,
                     },
                     {
@@ -299,7 +407,7 @@ app.controller("DashboardController",function ($scope,$http) {
                         posy:150,
                         name:"Mesa de verificación de producto 4",
                         description:"Mesa de verificación de calidad del producto",
-                        image:"img/item-block-2.png",
+                        image:"img/item-block-2.jpeg",
                         total_pendings:0,
                     },
                 ]
@@ -318,7 +426,7 @@ app.controller("DashboardController",function ($scope,$http) {
                         posy:80,
                         name:"Mesa de verificación de producto 5",
                         description:"Mesa de verificación de calidad del producto",
-                        image:"img/item-block-1.png",
+                        image:"img/item-block-1.jpeg",
                         total_pendings:10,
                     },
                     {
@@ -328,7 +436,7 @@ app.controller("DashboardController",function ($scope,$http) {
                         posy:120,
                         name:"Mesa de verificación de producto 6",
                         description:"Mesa de verificación de calidad del producto",
-                        image:"img/item-block-2.png",
+                        image:"img/item-block-2.jpeg",
                         total_pendings:1,
                     },
                 ]
