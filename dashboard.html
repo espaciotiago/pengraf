@@ -106,7 +106,7 @@
                 <div class="col-1 offset-1">
                     <span class="fas fa-plus fa-3x next-prev" data-toggle="modal" data-target="#newZoneModal"></span>
                 </div>
-                <div class="zones col-9">
+                <div class="zones col-9" style="margin-left: 5px">
                     <span ng-repeat="(key,value) in zones" ng-click="setSelectedZone($index)">
                         <img src="{{value.image}}" alt="" width="100" style="background: white">
                     </span>
@@ -181,7 +181,10 @@
                         <div class="card col-12 pending {{value.state_class}}">
                             <div class="card-body col-12">
                                 <div class="row">
-                                    <h4 class="col-12">{{value.name}}</h4>
+                                    <h4 class="col-12">
+                                        <i class="{{value.type_class}}"></i>
+                                        <b>{{value.name}}</b>
+                                    </h4>
                                     <p class="col-6">@{{value.responsable_username}}</p>
                                     <p class="col-6 date-end">{{value.end_date}}</p>
                                     <p class="col-12">
@@ -230,10 +233,10 @@
                 </p>
 
                 <div class="input-u col-12">
-                    <input class="col-12" type="text" placeholder="Nombre de la zona">
+                    <input class="col-12" type="text" placeholder="Nombre de la zona" ng-model="zoneCreationName">
                 </div>
                 <div class="input-u col-12">
-                    <textarea class="col-12" type="text" placeholder="Descripción" rows="3"></textarea>
+                    <textarea class="col-12" type="text" placeholder="Descripción" rows="3" ng-model="zoneCreationDescription"></textarea>
                 </div>
                 <h3>Tipo de zona: </h3><p>{{zoneForCreation.name}}</p>
                 <!-- List of zone types -->
@@ -247,7 +250,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-primary" ng-click="createZone()">Guardar</button>
             </div>
         </div>
     </div>
@@ -264,28 +267,28 @@
             </div>
             <div class="modal-body">
                 <p>
-                    Zona: Zona seleccionada
+                    Zona: {{selectedZone.name}}
                 </p>
                 <p>
                     Item: Tipo de item/bloque
                 </p>
                 <p>
-                    Creada por: @tmoreno
+                    Creado por: @{{user.username}}
                 </p>
                 <p>
-                    Fecha de creación: yyyy-MM-dd hh:mm:ss
+                    Fecha de creación: {{today}}
                 </p>
 
                 <div class="input-u col-12">
-                    <input class="col-12" type="text" placeholder="Nombre de la zona">
+                    <input class="col-12" type="text" placeholder="Nombre del item" ng-model="itemForCreationName">
                 </div>
                 <div class="input-u col-12">
-                    <textarea class="col-12" type="text" placeholder="Descripción" rows="3"></textarea>
+                    <textarea class="col-12" type="text" placeholder="Descripción" rows="3" ng-model="itemForCreationDescription"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" ng-click="addItem(20,20)" data-dismiss="modal">Guardar</button>
+                <button type="button" class="btn btn-primary" ng-click="createItem()">Guardar</button>
             </div>
         </div>
     </div>

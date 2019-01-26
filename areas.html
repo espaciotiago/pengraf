@@ -55,7 +55,7 @@
 <!-- Content -->
 <!--------------------------------------------------------------------------------------------------------------------->
 <div class="container-fluid content">
-    <h1>Areas de 'Nombre de la empresa'</h1>
+    <h1>Areas de {{cia.name}}</h1>
     <!-- Areas -->
     <div class="row">
 
@@ -113,15 +113,15 @@
                 </p>
 
                 <div class="input-u col-12">
-                    <input class="col-12" type="text" placeholder="Nombre del area">
+                    <input class="col-12" type="text" placeholder="Nombre del area" ng-model="nameNewArea">
                 </div>
                 <div class="input-u col-12">
-                    <textarea class="col-12" type="text" placeholder="Descripción" rows="3"></textarea>
+                    <textarea class="col-12" type="text" placeholder="Descripción" rows="3" ng-model="descriptionNewArea"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="onCancel()">Cancelar</button>
+                <button type="button" class="btn btn-primary" ng-click="onCreateArea()">Guardar</button>
             </div>
         </div>
     </div>

@@ -90,8 +90,6 @@ function dragMoveListener (event) {
     // update the posiion attributes
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
-
-    console.log("DRAG",target);
 }
 
 // this is used later in the resizing and gesture demos
