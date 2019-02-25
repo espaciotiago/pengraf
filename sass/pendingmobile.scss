@@ -1,0 +1,22 @@
+@import "index";
+
+.caducated{
+  border-left: 10px solid $red-pending-color;
+}
+.completed{
+  border-left: 10px solid $green-pending-color;
+}
+.onprocess{
+  border-left: 10px solid $yellow-pending-color;
+}
+
+.btn-primary {
+  border-radius: 0px;
+  background: #01AEEE;
+  border-color: #01AEEE;
+}
+.btn-primary:hover {
+  border-radius: 0px;
+  background: #01a9f3;
+  border-color: #01a9f3;
+}

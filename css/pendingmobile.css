@@ -221,39 +221,28 @@ span {
   }
 }
 
+.caducated {
+  border-left: 10px solid #BA583A;
+}
+
+.completed {
+  border-left: 10px solid #4E7220;
+}
+
+.onprocess {
+  border-left: 10px solid #F2D633;
+}
+
 .btn-primary {
+  border-radius: 0px;
   background: #01AEEE;
   border-color: #01AEEE;
 }
 
 .btn-primary:hover {
+  border-radius: 0px;
   background: #01a9f3;
   border-color: #01a9f3;
 }
 
-.main-card {
-  margin-top: 10%;
-  margin-left: 40%;
-  padding: 8px;
-}
-
-.login {
-  padding: 16px;
-}
-
-.forget {
-  text-align: center;
-  color: #7f8080;
-  font-size: 12px;
-  margin-top: -30px;
-}
-
-@media only screen and (max-width: 600px) {
-  .main-card {
-    margin-top: 5%;
-    margin-left: 6%;
-    padding: 8px;
-  }
-}
-
-/*# sourceMappingURL=login.css.map */
+/*# sourceMappingURL=pendingmobile.css.map */

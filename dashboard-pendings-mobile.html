@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="pengrafApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Pengraf</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- css -->
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+    <link rel="stylesheet" href="node_modules/alertifyjs/build/css/alertify.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/pendingmobile.css">
+    <!-- Js -->
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="node_modules/interactjs/dist/interact.js"></script>
+    <script src="node_modules/alertifyjs/build/alertify.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/showModals.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/loading.js"></script>
+</head>
+<body ng-controller="DashboardController" ng-init="initPendingsMobile()">
+<!--------------------------------------------------------------------------------------------------------------------->
+<!-- Loader -->
+<!--------------------------------------------------------------------------------------------------------------------->
+<div class="loader loader-show" id="loader" ng-show="loading">
+    <div class="bubblingG">
+	        <span id="bubblingG_1">
+	        </span>
+        <span id="bubblingG_2">
+	        </span>
+        <span id="bubblingG_3">
+	        </span>
+    </div>
+</div>
+<!--------------------------------------------------------------------------------------------------------------------->
+<!-- Nav bar -->
+<!--------------------------------------------------------------------------------------------------------------------->
+<nav class="navbar navbar-expand-lg navbar-light">
+    <img src="img/logo.png" alt="" height="40">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="./reports.html"><i class="fas fa-chart-line">  Reportes</i></a>
+            </li>
+            <!--
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
+            </li>
+            -->
+        </ul>
+    </div>
+</nav>
+<!--------------------------------------------------------------------------------------------------------------------->
+<!-- Content -->
+<!--------------------------------------------------------------------------------------------------------------------->
+<div class="container-fluid">
+    <div class="row">
+        <h4 class="col-10" id="selected_block_title">{{selectedBlock.name}}</h4>
+    </div>
+    <div class="row">
+        <p style="padding: 16px">{{selectedBlock.description}}</p>
+    </div>
+    <div class="row">
+        <button class="btn btn-primary col-12" data-toggle="modal" data-target="#newPendingModal" ng-click="onModalPendingClick()">
+            <i class="fas fa-plus">  Nuevo pendiente</i></button>
+    </div>
+    <!-- List of pendings -->
+    <div class="row" ng-repeat="(key,value) in pendings" style="margin-bottom: 5px">
+        <!-- List of pendings of item -->
+        <div class="card col-12 pending {{value.state_class}}">
+            <div class="card-body col-12">
+                <div class="row">
+                    <h4 class="col-12">
+                        <i class="{{value.type_class}}"></i>
+                        <b>{{value.name}}</b>
+                    </h4>
+                    <p class="col-6">@{{value.responsable_username}}</p>
+                    <p class="col-6 date-end">{{value.end_date}}</p>
+                    <p class="col-12">
+                        {{value.description}}
+                    </p>
+                    <div class="col-12">
+                        <div class="row">
+                            <p class="col-10 photo_evidence_title"><b>Evidencia fotográfica</b></p>
+                            <span class="fas fa-eye fa-sm" id="pending_pics_01_eye" ng-click="showPicsOfPending($index)"></span>
+                        </div>
+                        <div class="row active" ng-show="value.showing_pics == true">
+                            <span class="col-4" ng-repeat="(key, value2) in value.photos">
+                                <img src="{{value2.image}}" alt="" width="80">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--------------------------------------------------------------------------------------------------------------------->
+<!-- Modals -->
+<!--------------------------------------------------------------------------------------------------------------------->
+<!-- Modal For new Pending-->
+<div class="modal fade" id="newPendingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Nuevo Pendiente</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Zona: {{selectedZone.name}}
+                </p>
+                <p>
+                    Item: {{selectedBlock.name}}
+                </p>
+                <p>
+                    Creada por: @{{user.username}}
+                </p>
+                <p>
+                    Fecha de creación: {{today}}
+                </p>
+
+                <div class="input-u col-12">
+                    <input class="col-12" type="text" placeholder="Titulo del pendiente" ng-model="pendingTitleForCreation">
+                </div>
+                <div class="input-u col-12">
+                    <textarea class="col-12" type="text" placeholder="Descripción" rows="3" ng-model="pendingDescriptionForCreation"></textarea>
+                </div>
+                <div class="input-u col-12">
+                    <div class="btn-group col-12">
+                        <button class="btn-text col-10" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                            {{responsableSelectedText}}
+                        </button>
+                        <button type="button" class="dropdown-toggle toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <span class="dropdown-item" ng-repeat="(key,value) in usersList" ng-click="onResponsableSelected($index)">
+                                {{value.name}} {{value.lastname}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-u col-12">
+                    <div class="btn-group col-12">
+                        <button class="btn-text col-10" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                            <i class="{{pendingForCreationTypeImg}}" style="margin-right: 5px"></i>
+                            {{pendingForCreationTypeText}}
+                        </button>
+                        <button type="button" class="dropdown-toggle toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <span class="dropdown-item" ng-click="pendingTypeSelected(1)">
+                                <i class="fas fa-star"></i>
+                                Seguridad</span>
+                            <span class="dropdown-item" ng-click="pendingTypeSelected(2)">
+                                <i class="fas fa-project-diagram"></i>
+                                Procesos</span>
+                            <span class="dropdown-item" ng-click="pendingTypeSelected(3)">
+                                <i class="fas fa-check-circle"></i>
+                                Calidad</span>
+                            <span class="dropdown-item" ng-click="pendingTypeSelected(4)">
+                                <i class="fas fa-circle"></i>
+                                Generales</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-u col-12">
+                    <input class="col-9" type="text" placeholder="Fecha de cierre" onfocus="(this.type='date')" ng-model="pendingEndDateForCreation">
+                    <i class="fas fa-calendar-alt col-1" style="margin-left: 30px"></i>
+                </div>
+                <h3>Evidencia fotográfica:</h3>
+                <!-- List of pictures uploades -->
+                <div class="col-12">
+                    <div class="row">
+                        <span class="custom-file-upload col-3" onclick="document.getElementById('selectedFile').click();">
+                            <input type="file" id="selectedFile" accept="image/x-png,image/gif,image/jpeg" onchange="readURL(this);"/>
+                            <i class="fas fa-upload fa-2x"></i>
+                            <p>Agregar archivo</p>
+                        </span>
+
+                        <div class="col-3" ng-repeat="(key,value) in pendingForCreationImages">
+                            <img src="{{value}}" alt="" height="80" width="80" style="margin-top: 10px; padding: 2px">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="onModalPendingClose()">Cancelar</button>
+                <button type="button" class="btn btn-primary" ng-click="onCreatePending()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

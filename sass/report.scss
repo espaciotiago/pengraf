@@ -21,9 +21,9 @@ nav{
 .footer {
   width: 100%;
   position: absolute;
-  bottom: 0px;
+  bottom: -13px;
   p{
-    margin-top: 10px;
+    margin-top: 100px;
     padding-right: 40px;
   }
 }
@@ -94,9 +94,56 @@ nav{
 
 }
 
+.reports-mobile{
+  padding: 8px;
+  .pendings-card{
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    overflow: scroll;
+
+    .pending {
+      padding: 0px;
+      padding-top: 10px;
+      color: $darker-grey-color;
+
+      p {
+        margin-top: -8px;
+        font-size: 10px;
+        text-align: justify;
+      }
+
+      h4 {
+        font-size: 14px;
+      }
+
+      .date-end {
+        text-align: end;
+      }
+
+      .active {
+        display: flex;
+      }
+
+      .inactive {
+        display: none;
+      }
+
+      .text{
+        margin-top: -10px;
+      }
+
+      .minmap {
+        width: 80px;
+      }
+    }
+  }
+
+}
+
 .single-report{
   position: absolute;
-  height: 80%;
+  height: 85.5%;
   padding: 8px;
   .pending-card{
     margin: 0px;
@@ -160,9 +207,107 @@ nav{
         font-size: 14px;
       }
       .minmap{
-        height: 80px;
+        width: 80px;
       }
     }
+  }
+}
+
+.single-report-mobile{
+  padding: 8px;
+  .pending-card{
+    margin: 0px;
+    padding: 0px;
+    max-height: 100%;
+    overflow: scroll;
+    .pending {
+      padding: 0px;
+      padding-top: 10px;
+      color: $darker-grey-color;
+
+      p {
+        font-size: 12px;
+        text-align: justify;
+      }
+
+      h4 {
+        font-size: 16px;
+      }
+
+      .date-end {
+        text-align: end;
+      }
+
+      .text{
+        margin-top: -10px;
+      }
+
+      .actions{
+        margin: 0px;
+        padding: 0px;
+        margin-bottom: 8px;
+        align-content: end;
+        text-align: end;
+        .btn-primary{
+          background: $green-pending-color;
+          border-color: $green-pending-color;
+        }
+        .btn-primary:hover{
+          background: $green-pending-color-dark;
+          border-color: $green-pending-color-dark;
+        }
+        .btn-secondary{
+          background: $red-pending-color;
+          border-color: $red-pending-color;
+        }
+        .btn-secondary:hover{
+          background: $red-pending-color-dark;
+          border-color: $red-pending-color-dark;
+        }
+      }
+    }
+    .pending-description{
+      margin-top: 10px;
+      color: $darker-grey-color;
+      p {
+        font-size: 12px;
+        text-align: justify;
+      }
+      h4 {
+        font-size: 14px;
+      }
+      .minmap{
+        width: 80px;
+      }
+    }
+  }
+}
+
+.input-u{
+  margin-top: 10px;
+  padding: 2px;
+  .toggle{
+    text-align: right;
+    margin-right: -5px;
+  }
+  .btn-text{
+    margin-left: -7px;
+  }
+  button{
+    width: 100%;
+    background: transparent;
+    text-decoration: none;
+    text-align: left;
+    color: $darker-grey-color;
+    font-size: 14px;
+    border: none;
+    outline: none;
+  }
+  input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
   }
 }
 
@@ -174,4 +319,72 @@ nav{
 }
 .onprocess{
   border-left: 10px solid $yellow-pending-color;
+}
+
+#completePendingModal{
+  .modal-content{
+    border-top: 15px solid $main-color;
+  }
+}
+
+.modal{
+  p{
+    margin-top: -10px;
+    font-size: 12px;
+    color: $dark-grey-color;
+  }
+  h3{
+    font-size: 16px;
+    margin-top: 15px;
+  }
+  span{
+    color: $darker-grey-color;
+  }
+  .custom-file-upload {
+    margin-top: 10px;
+    border: 1px solid $main-color;
+    background: $main-color;
+    color: white;
+    display: inline-block;
+    padding: 8px 8px 0px 8px;
+    cursor: pointer;
+    text-align: center;
+    align-content: center;
+    align-items: center;
+
+    p{
+      margin-top: 5px;
+      color: white;
+      font-size: 12px;
+    }
+  }
+  .custom-file-upload:hover{
+    border: 1px solid $main-color-dark;
+    background: $main-color-dark;
+  }
+  input[type="file"] {
+    display: none;
+  }
+  .zone-type{
+    border: 1px solid $dark-grey-color;
+  }
+  .zone-type-selected{
+    border: 2px solid $main-color;
+  }
+  .btn-primary{
+    background: $main-color;
+    border-color: $main-color;
+  }
+  .btn-primary:hover{
+    background: $main-color-dark;
+    border-color: $main-color-dark;
+  }
+  .btn-secondary{
+    background: $red-pending-color;
+    border-color: $red-pending-color;
+  }
+  .btn-secondary:hover{
+    background: $red-pending-color-dark;
+    border-color: $red-pending-color-dark;
+  }
 }

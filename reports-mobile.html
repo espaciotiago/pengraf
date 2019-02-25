@@ -49,14 +49,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="./areas.html"><i class="fas fa-bars">  Areas</i></a>
+            </li>
             <!--
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
             </li>
             -->
-            <li class="nav-item">
-                <a class="nav-link" href="./areas.html"><i class="fas fa-bars"></i></a>
-            </li>
         </ul>
     </div>
 </nav>
@@ -68,7 +68,7 @@
         <!--------------------------------------------------------------------------------------------------------------------->
         <!-- Stats bar -->
         <!--------------------------------------------------------------------------------------------------------------------->
-        <div class="col-3 stats absolute-bar">
+        <div class="col-12 stats">
             <h3 class="col-12"><b>Estadisticas generales</b></h3>
 
             <div class="card col-12">
@@ -96,27 +96,27 @@
         <!--------------------------------------------------------------------------------------------------------------------->
         <!-- Reports list-->
         <!--------------------------------------------------------------------------------------------------------------------->
-        <div class="col-5 offset-3 reports">
+        <div class="col-12 reports-mobile">
             <h3 class="col-12"><b>Lista de pendientes</b></h3>
-            <div class="card col-12 pendings-card" style="margin-top: 10px">
-                <div class="card-body col-12">
-                    <!-- Area selector -->
-                    <div class="input-u col-12">
-                        <div class="btn-group col-12">
-                            <button class="btn-text" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                {{selectedArea.name}}
-                            </button>
-                            <button type="button" class="dropdown-toggle toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <div class="dropdown-menu">
+            <!-- Area selector -->
+            <div class="input-u col-12">
+                <div class="btn-group col-12">
+                    <button class="btn-text col-11" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                        {{selectedArea.name}}
+                    </button>
+                    <button type="button col-1" class="dropdown-toggle toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu col-12">
                                 <span class="dropdown-item" ng-repeat="(key,value) in areas" ng-click="onAreaSelected($index)">
                                     {{value.name}}</span>
-                            </div>
-                        </div>
                     </div>
+                </div>
+            </div>
+            <div class="card col-12 pendings-card" style="margin-top: 10px">
+                <div class="card-body col-12">
                     <!-- List of pendings -->
-                    <span ng-repeat="(key,value) in pendings" ng-click="onPendingSelected($index)">
+                    <span ng-repeat="(key,value) in pendings" ng-click="onPendingSelected($index)" data-toggle="modal" data-target="#pendingModal">
                         <div class="col-12 pending {{value.state_class}}">
                             <div class="col-12">
                                 <div class="row">
@@ -137,54 +137,6 @@
                 </div>
             </div>
         </div>
-        <!--------------------------------------------------------------------------------------------------------------------->
-        <!-- Single report description-->
-        <!--------------------------------------------------------------------------------------------------------------------->
-        <div class="col-4 offset-8 single-report">
-            <h3 class="col-12"><b>Pendiente seleccionado</b></h3>
-            <div class="card col-12 pending-card" style="margin-top: 10px" ng-show="isSelected">
-                <div class="card-body">
-                    <div class="col-12 pending {{selectedPending.state_class}}">
-                        <div class="col-12">
-                            <div class="row">
-                                <h4 class="col-12">
-                                    <i class="{{selectedPending.type_class}}"></i>
-                                    <b>{{selectedPending.name}}</b></h4>
-                                <p class="col-6">@{{selectedPending.responsable_username}}</p>
-                                <p class="col-6 date-end">{{selectedPending.end_date}}</p>
-                                <!--
-                                <p class="col-12 text"><b>Area: </b>Area 51</p>
-                                <p class="col-12 text"><b>Zona: </b>Zona de producción</p>
-                                -->
-                            </div>
-                            <div class="actions">
-                                <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>-->
-                                <button type="button"
-                                        class="btn btn-primary"
-                                        data-toggle="modal"
-                                        data-target="#completePendingModal"
-                                        ng-click="onCompleteModal()"
-                                        ng-show="selectedPending.state_class != 'completed'">Completar</button>
-                            </div>
-                            <hr style="margin: 0px;padding: 0px; margin-left: -15px;margin-right: -15px">
-                        </div>
-                    </div>
-                    <div class="row pending-description">
-                        <div class="col-12">
-                            <p>
-                                {{selectedPending.description}}
-                            </p>
-
-                            <h4><b>Evidencia fotográfica</b></h4>
-
-                            <span class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4" ng-repeat="(key,value) in selectedPending.photos">
-                                <img src="{{value.image}}" alt="" class="minmap">
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -199,6 +151,61 @@
 <!--------------------------------------------------------------------------------------------------------------------->
 <!-- Modals -->
 <!--------------------------------------------------------------------------------------------------------------------->
+<div class="modal fade" id="pendingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="col-12 single-report-mobile">
+                <div class="modal-header">
+                    <h3><b>Pendiente seleccionado</b></h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="card col-12 pending-card" style="margin-top: 10px" ng-show="isSelected">
+                    <div class="card-body">
+                        <div class="col-12 pending {{selectedPending.state_class}}">
+                            <div class="col-12">
+                                <div class="row">
+                                    <h4 class="col-12">
+                                        <i class="{{selectedPending.type_class}}"></i>
+                                        <b>{{selectedPending.name}}</b></h4>
+                                    <p class="col-6">@{{selectedPending.responsable_username}}</p>
+                                    <p class="col-6 date-end">{{selectedPending.end_date}}</p>
+                                    <!--
+                                    <p class="col-12 text"><b>Area: </b>Area 51</p>
+                                    <p class="col-12 text"><b>Zona: </b>Zona de producción</p>
+                                    -->
+                                </div>
+                                <div class="actions">
+                                    <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>-->
+                                    <button type="button" class="btn btn-primary"
+                                            data-toggle="modal"
+                                            data-target="#completePendingModal"
+                                            ng-click="onCompleteModal()"
+                                            ng-show="selectedPending.state_class != 'completed'">Completar</button>
+                                </div>
+                                <hr style="margin: 0px;padding: 0px; margin-left: -15px;margin-right: -15px">
+                            </div>
+                        </div>
+                        <div class="row pending-description">
+                            <div class="col-12">
+                                <p>
+                                    {{selectedPending.description}}
+                                </p>
+
+                                <h4><b>Evidencia fotográfica</b></h4>
+
+                                <span class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4" ng-repeat="(key,value) in selectedPending.photos">
+                                <img src="{{value.image}}" alt="" class="minmap">
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Modal For complete pending-->
 <div class="modal fade" id="completePendingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -217,48 +224,15 @@
                     Fecha en la que se completó:  {{today}}
                 </p>
                 <div class="input-u col-12">
-                    <textarea class="col-12" type="text" placeholder="Comentarios" rows="3" ng-model="completePendingComment"></textarea>
-                </div>
-                <h3>Evidencia fotográfica:</h3>
-                <!-- List of pictures uploades -->
-                <div class="col-12">
-                    <div class="row">
-                        <span class="custom-file-upload col-3" onclick="document.getElementById('selectedFile').click();">
-                            <input type="file" id="selectedFile" accept="image/x-png,image/gif,image/jpeg" onchange="readURLComplete(this);"/>
-                            <i class="fas fa-upload fa-2x"></i>
-                            <p>Agregar archivo</p>
-                        </span>
-
-                        <div class="col-3" ng-repeat="(key,value) in completedPendingImages">
-                            <img src="{{value}}" alt="" height="80" width="80" style="margin-top: 10px; padding: 2px">
-                        </div>
-                    </div>
+                    <textarea class="col-12" type="text" placeholder="Descripción" rows="3" ng-model="zoneCreationDescription"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="onResetCompleteishon()">Cancelar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-primary" ng-click="">Completar</button>
             </div>
         </div>
     </div>
 </div>
-
-
-<script language=javascript>
-    if (navigator.userAgent.match(/Android/i)
-        || navigator.userAgent.match(/webOS/i)
-        || navigator.userAgent.match(/iPhone/i)
-        || navigator.userAgent.match(/iPad/i)
-        || navigator.userAgent.match(/iPod/i)
-        || navigator.userAgent.match(/BlackBerry/i)
-        || navigator.userAgent.match(/Windows Phone/i)) {
-
-        var query = window.location.search.substring(1);
-        var qs = parse_query_string(query);
-
-        //Is mobile - redirect
-        location.replace("./reports-mobile.html");
-    }
-</script>
 </body>
 </html>

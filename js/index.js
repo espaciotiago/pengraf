@@ -9,13 +9,29 @@ function setFullScreen() {
     let right = document.getElementById("right");
     let center = document.getElementById("center");
     let left = document.getElementById("left");
+    let selected_block_title = document.getElementById("selected_block_title");
+    let photo_evidence_title = document.getElementsByClassName("photo_evidence_title");
 
     if(fullScreen){
         left.setAttribute("class","col-2 sidebar not-fullscreen");
         right.setAttribute("class","col-2 sidebar");
+        selected_block_title.setAttribute("class","col-10");
+
+
+        var i;
+        for (i = 0; i < photo_evidence_title.length; i++) {
+            photo_evidence_title[i].setAttribute("class","col-10 photo_evidence_title");
+        }
     }else{
         left.setAttribute("class","fullscreen sidebar");
         right.setAttribute("class","col-4 sidebar");
+        selected_block_title.setAttribute("class","col-11");
+
+
+        var i;
+        for (i = 0; i < photo_evidence_title.length; i++) {
+            photo_evidence_title[i].setAttribute("class","col-11 photo_evidence_title");
+        }
     }
     fullScreen = !fullScreen;
 }

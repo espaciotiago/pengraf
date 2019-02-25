@@ -242,10 +242,10 @@ nav {
 .footer {
   width: 100%;
   position: absolute;
-  bottom: 0px;
+  bottom: -13px;
 }
 .footer p {
-  margin-top: 10px;
+  margin-top: 100px;
   padding-right: 40px;
 }
 
@@ -302,9 +302,47 @@ nav {
   width: 80px;
 }
 
+.reports-mobile {
+  padding: 8px;
+}
+.reports-mobile .pendings-card {
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  overflow: scroll;
+}
+.reports-mobile .pendings-card .pending {
+  padding: 0px;
+  padding-top: 10px;
+  color: #7f8080;
+}
+.reports-mobile .pendings-card .pending p {
+  margin-top: -8px;
+  font-size: 10px;
+  text-align: justify;
+}
+.reports-mobile .pendings-card .pending h4 {
+  font-size: 14px;
+}
+.reports-mobile .pendings-card .pending .date-end {
+  text-align: end;
+}
+.reports-mobile .pendings-card .pending .active {
+  display: flex;
+}
+.reports-mobile .pendings-card .pending .inactive {
+  display: none;
+}
+.reports-mobile .pendings-card .pending .text {
+  margin-top: -10px;
+}
+.reports-mobile .pendings-card .pending .minmap {
+  width: 80px;
+}
+
 .single-report {
   position: absolute;
-  height: 80%;
+  height: 85.5%;
   padding: 8px;
 }
 .single-report .pending-card {
@@ -366,7 +404,100 @@ nav {
   font-size: 14px;
 }
 .single-report .pending-card .pending-description .minmap {
-  height: 80px;
+  width: 80px;
+}
+
+.single-report-mobile {
+  padding: 8px;
+}
+.single-report-mobile .pending-card {
+  margin: 0px;
+  padding: 0px;
+  max-height: 100%;
+  overflow: scroll;
+}
+.single-report-mobile .pending-card .pending {
+  padding: 0px;
+  padding-top: 10px;
+  color: #7f8080;
+}
+.single-report-mobile .pending-card .pending p {
+  font-size: 12px;
+  text-align: justify;
+}
+.single-report-mobile .pending-card .pending h4 {
+  font-size: 16px;
+}
+.single-report-mobile .pending-card .pending .date-end {
+  text-align: end;
+}
+.single-report-mobile .pending-card .pending .text {
+  margin-top: -10px;
+}
+.single-report-mobile .pending-card .pending .actions {
+  margin: 0px;
+  padding: 0px;
+  margin-bottom: 8px;
+  align-content: end;
+  text-align: end;
+}
+.single-report-mobile .pending-card .pending .actions .btn-primary {
+  background: #4E7220;
+  border-color: #4E7220;
+}
+.single-report-mobile .pending-card .pending .actions .btn-primary:hover {
+  background: #39571a;
+  border-color: #39571a;
+}
+.single-report-mobile .pending-card .pending .actions .btn-secondary {
+  background: #BA583A;
+  border-color: #BA583A;
+}
+.single-report-mobile .pending-card .pending .actions .btn-secondary:hover {
+  background: #ba332b;
+  border-color: #ba332b;
+}
+.single-report-mobile .pending-card .pending-description {
+  margin-top: 10px;
+  color: #7f8080;
+}
+.single-report-mobile .pending-card .pending-description p {
+  font-size: 12px;
+  text-align: justify;
+}
+.single-report-mobile .pending-card .pending-description h4 {
+  font-size: 14px;
+}
+.single-report-mobile .pending-card .pending-description .minmap {
+  width: 80px;
+}
+
+.input-u {
+  margin-top: 10px;
+  padding: 2px;
+}
+.input-u .toggle {
+  text-align: right;
+  margin-right: -5px;
+}
+.input-u .btn-text {
+  margin-left: -7px;
+}
+.input-u button {
+  width: 100%;
+  background: transparent;
+  text-decoration: none;
+  text-align: left;
+  color: #7f8080;
+  font-size: 14px;
+  border: none;
+  outline: none;
+}
+.input-u input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
 }
 
 .caducated {
@@ -379,6 +510,69 @@ nav {
 
 .onprocess {
   border-left: 10px solid #F2D633;
+}
+
+#completePendingModal .modal-content {
+  border-top: 15px solid #01AEEE;
+}
+
+.modal p {
+  margin-top: -10px;
+  font-size: 12px;
+  color: #cacbcb;
+}
+.modal h3 {
+  font-size: 16px;
+  margin-top: 15px;
+}
+.modal span {
+  color: #7f8080;
+}
+.modal .custom-file-upload {
+  margin-top: 10px;
+  border: 1px solid #01AEEE;
+  background: #01AEEE;
+  color: white;
+  display: inline-block;
+  padding: 8px 8px 0px 8px;
+  cursor: pointer;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+}
+.modal .custom-file-upload p {
+  margin-top: 5px;
+  color: white;
+  font-size: 12px;
+}
+.modal .custom-file-upload:hover {
+  border: 1px solid #01a9f3;
+  background: #01a9f3;
+}
+.modal input[type=file] {
+  display: none;
+}
+.modal .zone-type {
+  border: 1px solid #cacbcb;
+}
+.modal .zone-type-selected {
+  border: 2px solid #01AEEE;
+}
+.modal .btn-primary {
+  background: #01AEEE;
+  border-color: #01AEEE;
+}
+.modal .btn-primary:hover {
+  background: #01a9f3;
+  border-color: #01a9f3;
+}
+.modal .btn-secondary {
+  background: #BA583A;
+  border-color: #BA583A;
+}
+.modal .btn-secondary:hover {
+  background: #ba332b;
+  border-color: #ba332b;
 }
 
 /*# sourceMappingURL=report.css.map */
