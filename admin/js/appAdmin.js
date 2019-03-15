@@ -10,9 +10,14 @@ app.controller("LoginControlelr",function ($scope,$http) {
         getSession();
     };
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Actions
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
+     *
+     */
     $scope.login = function () {
         //Validate fields
-
         if(!$scope.username || !$scope.password || $scope.username == "" || $scope.password == ""){
             alertify.error("Por favor llene todos los campos para continuar");
         }else{
@@ -22,7 +27,7 @@ app.controller("LoginControlelr",function ($scope,$http) {
     };
 
     // -----------------------------------------------------------------------------------------------------------------
-    // Actions
+    // Extra functions
     // -----------------------------------------------------------------------------------------------------------------
     /**
      * Do the login request
@@ -132,7 +137,182 @@ app.controller("LoginControlelr",function ($scope,$http) {
 //----------------------------------------------------------------------------------------------------------------------
 // Cia Controller
 //----------------------------------------------------------------------------------------------------------------------
+app.controller("DashboardControlelr",function ($scope,$http) {
+    $scope.loading = false;
 
+    $scope.initDashboard = function () {
+        getSession();
+    };
+
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Actions
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * Form selection
+     */
+    $scope.showCiaForm = function(){
+        $scope.loading = true;
+        let ciaForm = document.getElementById("ciaForm");
+        let ciaButton = document.getElementById("ciaBtn");
+        let userForm = document.getElementById("userForm");
+        let userButton = document.getElementById("userBtn");
+        let blockForm = document.getElementById("blockForm");
+        let blockButton = document.getElementById("blockBtn");
+        let zoneForm = document.getElementById("zoneForm");
+        let zoneButton = document.getElementById("zoneBtn");
+
+        ciaForm.setAttribute("class","col-6 showing");
+        userForm.setAttribute("class","col-6 notshowing");
+        blockForm.setAttribute("class","col-6 notshowing");
+        zoneForm.setAttribute("class","col-6 notshowing");
+
+        ciaButton.setAttribute("class","btn btn-primary active col-12");
+        userButton.setAttribute("class","btn btn-primary col-12");
+        blockButton.setAttribute("class","btn btn-primary col-12");
+        zoneButton.setAttribute("class","btn btn-primary col-12");
+        $scope.loading = false;
+    };
+    $scope.showUserForm = function(){
+        $scope.loading = true;
+        let ciaForm = document.getElementById("ciaForm");
+        let ciaButton = document.getElementById("ciaBtn");
+        let userForm = document.getElementById("userForm");
+        let userButton = document.getElementById("userBtn");
+        let blockForm = document.getElementById("blockForm");
+        let blockButton = document.getElementById("blockBtn");
+        let zoneForm = document.getElementById("zoneForm");
+        let zoneButton = document.getElementById("zoneBtn");
+
+        ciaForm.setAttribute("class","col-6 notshowing");
+        userForm.setAttribute("class","col-6 showing");
+        blockForm.setAttribute("class","col-6 notshowing");
+        zoneForm.setAttribute("class","col-6 notshowing");
+
+        ciaButton.setAttribute("class","btn btn-primary col-12");
+        userButton.setAttribute("class","btn btn-primary active col-12");
+        blockButton.setAttribute("class","btn btn-primary col-12");
+        zoneButton.setAttribute("class","btn btn-primary col-12");
+        $scope.loading = false;
+    };
+    $scope.showBlockForm = function(){
+        $scope.loading = true;
+        let ciaForm = document.getElementById("ciaForm");
+        let ciaButton = document.getElementById("ciaBtn");
+        let userForm = document.getElementById("userForm");
+        let userButton = document.getElementById("userBtn");
+        let blockForm = document.getElementById("blockForm");
+        let blockButton = document.getElementById("blockBtn");
+        let zoneForm = document.getElementById("zoneForm");
+        let zoneButton = document.getElementById("zoneBtn");
+
+        ciaForm.setAttribute("class","col-6 notshowing");
+        userForm.setAttribute("class","col-6 notshowing");
+        blockForm.setAttribute("class","col-6 showing");
+        zoneForm.setAttribute("class","col-6 notshowing");
+
+        ciaButton.setAttribute("class","btn btn-primary col-12");
+        userButton.setAttribute("class","btn btn-primary col-12");
+        blockButton.setAttribute("class","btn btn-primary active col-12");
+        zoneButton.setAttribute("class","btn btn-primary col-12");
+        $scope.loading = false;
+    };
+    $scope.showZoneForm = function(){
+        $scope.loading = true;
+        let ciaForm = document.getElementById("ciaForm");
+        let ciaButton = document.getElementById("ciaBtn");
+        let userForm = document.getElementById("userForm");
+        let userButton = document.getElementById("userBtn");
+        let blockForm = document.getElementById("blockForm");
+        let blockButton = document.getElementById("blockBtn");
+        let zoneForm = document.getElementById("zoneForm");
+        let zoneButton = document.getElementById("zoneBtn");
+
+        ciaForm.setAttribute("class","col-6 notshowing");
+        userForm.setAttribute("class","col-6 notshowing");
+        blockForm.setAttribute("class","col-6 notshowing");
+        zoneForm.setAttribute("class","col-6 showing");
+
+        ciaButton.setAttribute("class","btn btn-primary col-12");
+        userButton.setAttribute("class","btn btn-primary col-12");
+        blockButton.setAttribute("class","btn btn-primary col-12");
+        zoneButton.setAttribute("class","btn btn-primary active col-12");
+        $scope.loading = false;
+    };
+    /**
+     * Close the session
+     */
+    $scope.onCloseSession = function () {
+        closeSession();
+    };
+    // -----------------------------------------------------------------------------------------------------------------
+    // Extra functions
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * Get the session
+     */
+    function getSession(){
+        $scope.loading = true;
+        //Parameters of the request
+        let url = "/pengraf/v1/api/session/";
+        let req = {
+            method: 'GET',
+            url: url,
+        };
+        $http(req).then(function successCallback(response) {
+            // this callback will be called asynchronously
+            // when the response is available
+            let success = response.data.ans;
+            if(success){
+                let body = response.data.body;
+                $scope.user = {
+                    id: body.PK_USUARIO,
+                    id_cia: body.FK_ID_EMPRESA,
+                    profile: body.PROFILE,
+                    username: body.USERNAME,
+                    name: body.NOMBRE,
+                    lastname: body.APELLIDO,
+                    mail: body.CORREO,
+                    phone: body.TELEFONO,
+                    token: "thejsontokengenerated1234567890"
+                };
+                //TODO Traer todas las compañias
+            }else{
+                $(location).attr('href', './index.html');
+            }
+            $scope.loading = false;
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            console.log("ERROR",response);
+            alertify.error("Lo sentimos, ha ocurrido un error en el servidor");
+        });
+    }
+
+    /**
+     * Close the session
+     */
+    function closeSession(){
+        $scope.loading = true;
+        //Parameters of the request
+        let url = "/pengraf/v1/api/session/close";
+        let req = {
+            method: 'GET',
+            url: url,
+        };
+        $http(req).then(function successCallback(response) {
+            // this callback will be called asynchronously
+            // when the response is available
+            $scope.loading = false;
+            $(location).attr('href', './index.html');
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            console.log("ERROR",response);
+            alertify.error("Lo sentimos, ha ocurrido un error en el servidor");
+        });
+    }
+});
 //----------------------------------------------------------------------------------------------------------------------
 // User Controller
 //----------------------------------------------------------------------------------------------------------------------

@@ -1754,7 +1754,7 @@ app.controller("ReportsController",function ($scope,$http) {
     $scope.datasetCat = [];
     $scope.datasetSta = [];
     $scope.today = getToday();
-    $scope.completedPendingImages = [];
+    $scope.completedPendingImages = "";
 
     /**
      * Init
@@ -1830,12 +1830,35 @@ app.controller("ReportsController",function ($scope,$http) {
         resetComments();
     };
 
+    /**
+     *
+     */
+    $scope.onCompletePending = function () {
+        if(!$scope.completePendingComment || $scope.completePendingComment == ""){
+            alertify.error("Por favor añada un comentario para completar el pendiente");
+        }else{
+            //TODO Send the pending update
+        }
+    };
+
     // -----------------------------------------------------------------------------------------------------------------
     // Functions
     // -----------------------------------------------------------------------------------------------------------------
+
+    function updatePending() {
+        
+    }
+
+    function sendComment() {
+        //TODO
+    }
+    
+    /**
+     * Reset the modal values
+     */
     function resetComments(){
         $scope.completePendingComment = "";
-        $scope.completedPendingImages = [];
+        $scope.completedPendingImages = "";
     }
 
     /**
@@ -1843,8 +1866,8 @@ app.controller("ReportsController",function ($scope,$http) {
      * @param image
      */
     $scope.addImageToUploadForComplete = function (image) {
-        if($scope.completedPendingImages.length<1) {
-            $scope.completedPendingImages.push(image);
+        if($scope.completedPendingImages == "") {
+            $scope.completedPendingImages = image;
         }else{
             alertify.warning("Solo se puede adjuntar 1 archivo");
         }

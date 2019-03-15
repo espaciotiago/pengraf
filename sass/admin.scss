@@ -6,6 +6,41 @@
 .active{
   background: $green-pending-color;
 }
+
+.notshowing{
+  display: none;
+}
+
+.showing{
+  display: block;
+}
+
 .card{
   margin-top: 20px;
+}
+
+.custom-file-upload {
+  margin-top: 10px;
+  border: 1px solid $main-color;
+  background: $main-color;
+  color: white;
+  display: inline-block;
+  padding: 8px 8px 0px 8px;
+  cursor: pointer;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+
+  p{
+    margin-top: 5px;
+    color: white;
+    font-size: 12px;
+  }
+}
+.custom-file-upload:hover{
+  border: 1px solid $main-color-dark;
+  background: $main-color-dark;
+}
+input[type="file"] {
+  display: none;
 }

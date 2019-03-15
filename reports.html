@@ -229,15 +229,13 @@
                             <p>Agregar archivo</p>
                         </span>
 
-                        <div class="col-3" ng-repeat="(key,value) in completedPendingImages">
-                            <img src="{{value}}" alt="" height="80" width="80" style="margin-top: 10px; padding: 2px">
-                        </div>
+                        <img src="{{completedPendingImages}}" alt="" height="80" width="80" style="margin-top: 10px; padding: 2px">
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="onResetCompleteishon()">Cancelar</button>
-                <button type="button" class="btn btn-primary" ng-click="">Completar</button>
+                <button type="button" class="btn btn-primary" ng-click="onCompletePending()">Completar</button>
             </div>
         </div>
     </div>

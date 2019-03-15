@@ -723,8 +723,43 @@ ul.dots > li:hover > a > mark.wobble {
   background: #4E7220;
 }
 
+.notshowing {
+  display: none;
+}
+
+.showing {
+  display: block;
+}
+
 .card {
   margin-top: 20px;
+}
+
+.custom-file-upload {
+  margin-top: 10px;
+  border: 1px solid #01AEEE;
+  background: #01AEEE;
+  color: white;
+  display: inline-block;
+  padding: 8px 8px 0px 8px;
+  cursor: pointer;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+}
+.custom-file-upload p {
+  margin-top: 5px;
+  color: white;
+  font-size: 12px;
+}
+
+.custom-file-upload:hover {
+  border: 1px solid #01a9f3;
+  background: #01a9f3;
+}
+
+input[type=file] {
+  display: none;
 }
 
 /*# sourceMappingURL=admin.css.map */
