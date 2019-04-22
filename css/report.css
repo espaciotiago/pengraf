@@ -226,6 +226,18 @@ nav {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+.active {
+  display: block;
+}
+
+.inactive {
+  display: none;
+}
+
+.selected {
+  background: #7f8080;
+}
+
 .navbar {
   padding: 10px;
 }
@@ -256,16 +268,18 @@ nav {
 }
 
 .absolute-bar {
-  position: absolute;
-  height: 90%;
+  position: fixed;
+  height: 100%;
   overflow: scroll;
   padding: 8px;
+  background: #b7b8b8;
+  color: white;
 }
 
 .reports {
   position: absolute;
   height: 85.5%;
-  padding: 8px;
+  margin-top: 70px;
 }
 .reports .pendings-card {
   margin: 0px;
@@ -341,9 +355,10 @@ nav {
 }
 
 .single-report {
-  position: absolute;
+  position: fixed;
   height: 85.5%;
   padding: 8px;
+  margin-top: 70px;
 }
 .single-report .pending-card {
   margin: 0px;
@@ -519,7 +534,7 @@ nav {
 .modal p {
   margin-top: -10px;
   font-size: 12px;
-  color: #cacbcb;
+  color: #b7b8b8;
 }
 .modal h3 {
   font-size: 16px;
@@ -553,7 +568,7 @@ nav {
   display: none;
 }
 .modal .zone-type {
-  border: 1px solid #cacbcb;
+  border: 1px solid #b7b8b8;
 }
 .modal .zone-type-selected {
   border: 2px solid #01AEEE;

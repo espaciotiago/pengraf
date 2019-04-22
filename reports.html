@@ -40,83 +40,120 @@
     </div>
 </div>
 <!--------------------------------------------------------------------------------------------------------------------->
-<!-- Nav bar -->
-<!--------------------------------------------------------------------------------------------------------------------->
-<nav class="navbar navbar-expand-lg navbar-light">
-    <img src="img/logo.png" alt="" height="40">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav ml-auto">
-            <!--
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
-            </li>
-            -->
-            <li class="nav-item">
-                <a class="nav-link" href="./areas.html"><i class="fas fa-bars"></i></a>
-            </li>
-        </ul>
-    </div>
-</nav>
-<!--------------------------------------------------------------------------------------------------------------------->
 <!-- Content -->
 <!--------------------------------------------------------------------------------------------------------------------->
 <div class="container-fluid">
     <div class="row">
         <!--------------------------------------------------------------------------------------------------------------------->
-        <!-- Stats bar -->
+        <!-- Side bar -->
         <!--------------------------------------------------------------------------------------------------------------------->
-        <div class="col-3 stats absolute-bar">
-            <h3 class="col-12"><b>Estadisticas generales</b></h3>
-
-            <div class="card col-12">
-                <div class="card-body col-12">
-                    <div class="row">
-                        <div class="card-title">
-                            <p class="col-12"><b>Pendientes completados</b></p>
-                        </div>
-                        <canvas id="pendingStats" height="200"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card col-12" style="margin-top: 10px">
-                <div class="card-body col-12">
-                    <div class="row">
-                        <div class="card-title">
-                            <p class="col-12"><b>Pendientes por categoria</b></p>
-                        </div>
-                        <canvas id="timelineStats" height="200"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--------------------------------------------------------------------------------------------------------------------->
-        <!-- Reports list-->
-        <!--------------------------------------------------------------------------------------------------------------------->
-        <div class="col-5 offset-3 reports">
-            <h3 class="col-12"><b>Lista de pendientes</b></h3>
-            <div class="card col-12 pendings-card" style="margin-top: 10px">
-                <div class="card-body col-12">
-                    <!-- Area selector -->
-                    <div class="input-u col-12">
-                        <div class="btn-group col-12">
-                            <button class="btn-text" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                {{selectedArea.name}}
-                            </button>
-                            <button type="button" class="dropdown-toggle toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <div class="dropdown-menu">
+        <div class="col-2 stats absolute-bar">
+            <div style="margin-top: 70px">
+                <span class="row selected" id="reports-filter" style="padding-left: 20px; padding-top: 15px" ng-click="onReportsOption()">
+                    <span style="color: white">
+                        <b><i class="fas fa-file-alt" style="margin-right: 8px"></i>Ver Pendientes</b>
+                    </span>
+                    <div id="filter-selector" class="col-12" style="padding: 0 0 16px 0">
+                        <!-- Area selector -->
+                        <div class="input-u col-12">
+                            <div class="btn-group col-12">
+                                <button class="btn-text" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                                    {{selectedArea.name}}
+                                </button>
+                                <button type="button" class="dropdown-toggle toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu">
                                 <span class="dropdown-item" ng-repeat="(key,value) in areas" ng-click="onAreaSelected($index)">
                                     {{value.name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Category selector -->
+                        <div class="input-u col-12">
+                            <div class="btn-group col-12">
+                                <button class="btn-text" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                                    {{selectedCategory.name}}
+                                </button>
+                                <button type="button" class="dropdown-toggle toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <span class="dropdown-item" ng-repeat="(key,value) in categogies" ng-click="onCatSelected($index)">
+                                    {{value.name}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- List of pendings -->
-                    <span ng-repeat="(key,value) in pendings" ng-click="onPendingSelected($index)">
+                </span>
+
+                <span class="row" id="stats-label" style="padding: 8px 8px 8px 20px" ng-click="onStatsOption()">
+                    <span style="color: white">
+                        <b><i class="fas fa-chart-line" style="margin-right: 8px;"></i>Estadisticas Generales</b>
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <!--------------------------------------------------------------------------------------------------------------------->
+        <!-- Nav bar -->
+        <!--------------------------------------------------------------------------------------------------------------------->
+        <nav class="navbar navbar-expand-lg navbar-light col-12 navbar-fixed-top">
+            <img src="img/logo.png" alt="" height="40">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav ml-auto">
+                    <!--
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
+                    </li>
+                    -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="./areas.html"><i class="fas fa-bars"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="col-7 offset-2 reports" id="repSec">
+            <!--------------------------------------------------------------------------------------------------------------------->
+            <!-- Stats bar -->
+            <!--------------------------------------------------------------------------------------------------------------------->
+            <div class="row inactive" id="stats">
+                <h3 class="col-12"><b>Estadisticas generales</b></h3>
+                <div class="card col-5 pendings-card" style="margin-left: 20px">
+                    <div class="card-body col-12">
+                        <div class="row">
+                            <div class="card-title">
+                                <p class="col-12"><b>Pendientes completados</b></p>
+                            </div>
+                            <canvas id="pendingStats" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-5 pendings-card" style="margin-left: 20px">
+                    <div class="card-body col-12">
+                        <div class="row">
+                            <div class="card-title">
+                                <p class="col-12"><b>Pendientes por categoria</b></p>
+                            </div>
+                            <canvas id="timelineStats" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--------------------------------------------------------------------------------------------------------------------->
+            <!-- Reports list-->
+            <!--------------------------------------------------------------------------------------------------------------------->
+            <div class="row" id="reports">
+                <h3 class="col-12"><b>Lista de pendientes</b></h3>
+                <div class="card col-12 pendings-card" style="margin-top: 10px">
+                    <div class="card-body col-12">
+                        <!-- List of pendings -->
+                        <span ng-repeat="(key,value) in pendings" ng-click="onPendingSelected($index)">
                         <div class="col-12 pending {{value.state_class}}">
                             <div class="col-12">
                                 <div class="row">
@@ -134,13 +171,14 @@
                             </div>
                         </div>
                     </span>
+                    </div>
                 </div>
             </div>
         </div>
         <!--------------------------------------------------------------------------------------------------------------------->
         <!-- Single report description-->
         <!--------------------------------------------------------------------------------------------------------------------->
-        <div class="col-4 offset-8 single-report">
+        <div class="col-3 offset-9 single-report" id="single-report">
             <h3 class="col-12"><b>Pendiente seleccionado</b></h3>
             <div class="card col-12 pending-card" style="margin-top: 10px" ng-show="isSelected">
                 <div class="card-body">
@@ -187,15 +225,6 @@
         </div>
     </div>
 </div>
-
-<!--------------------------------------------------------------------------------------------------------------------->
-<!-- Footer -->
-<!--------------------------------------------------------------------------------------------------------------------->
-<footer class="footer" style="z-index: -99">
-    <div class="row">
-        <p class="copyright col-12">Copyright © Pengraf 2018</p>
-    </div>
-</footer>
 <!--------------------------------------------------------------------------------------------------------------------->
 <!-- Modals -->
 <!--------------------------------------------------------------------------------------------------------------------->

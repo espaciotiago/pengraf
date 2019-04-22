@@ -64,16 +64,16 @@
                 </div>
                 <div class="card-body">
                     <div class="input-u col-12">
-                        <input class="col-12" type="text" placeholder="Nombre">
+                        <input class="col-12" type="text" placeholder="Nombre" ng-model="nameCia">
                     </div>
                     <div class="input-u col-12">
-                        <input class="col-12" type="text" placeholder="Dirección">
+                        <input class="col-12" type="text" placeholder="Dirección" ng-model="addressCia">
                     </div>
                     <div class="input-u col-12">
-                        <input class="col-12" type="text" placeholder="Telefono">
+                        <input class="col-12" type="phone" placeholder="Telefono" ng-model="phoneCia">
                     </div>
                     <div class="col-12" style="align-content: end;align-items: end;text-align: end">
-                        <button type="button" class="btn btn-primary pull-right">Guardar</button>
+                        <button type="button" class="btn btn-primary pull-right" ng-click="sendCia()">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -87,58 +87,59 @@
                     <h2><b>Crear nuevo usuario</b></h2>
                 </div>
                 <div class="card-body">
+                    <p style="font-size: 12px"><b>Compañia:</b></p>
                     <div class="input-u col-12">
                         <div class="btn-group col-12">
                             <button class="btn-text col-10" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                Compañia
+                                {{selectedCia.nombre}}
                             </button>
                             <button type="button" class="dropdown-toggle toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu">
-                            <span class="dropdown-item">
-                                TODO: Cia list item</span>
-                                <span class="dropdown-item">
-                                TODO: Cia list item</span>
+                            <span class="dropdown-item" ng-repeat="(key,value) in cias" ng-click="setSelectedCia($index)">
+                                {{value.nombre}}</span>
                             </div>
                         </div>
                     </div>
+                    <br>
+                    <p style="font-size: 12px"><b>Datos del usuario:</b></p>
                     <div class="input-u col-12">
                         <div class="btn-group col-12">
                             <button class="btn-text col-10" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                Tipo de usuario
+                                {{selectedUserType.name}}
                             </button>
                             <button type="button" class="dropdown-toggle toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu">
-                            <span class="dropdown-item">
+                            <span class="dropdown-item" ng-click="setSelectedUserType(1)">
                                 Administrador</span>
-                                <span class="dropdown-item">
+                                <span class="dropdown-item" ng-click="setSelectedUserType(2)">
                                 Usuario</span>
                             </div>
                         </div>
                     </div>
                     <div class="input-u col-12">
-                        <input class="col-12" type="text" placeholder="Nombre">
+                        <input class="col-12" type="text" placeholder="Nombre" ng-model="nameUser">
                     </div>
                     <div class="input-u col-12">
-                        <input class="col-12" type="text" placeholder="Apellido">
+                        <input class="col-12" type="text" placeholder="Apellido" ng-model="lastnameUser">
                     </div>
                     <div class="input-u col-12">
-                        <input class="col-12" type="email" placeholder="Correo electrónico">
+                        <input class="col-12" type="email" placeholder="Correo electrónico" ng-model="mailUser">
                     </div>
                     <div class="input-u col-12">
-                        <input class="col-12" type="email" placeholder="Nombre de usuario">
+                        <input class="col-12" type="text" placeholder="Nombre de usuario" ng-model="usernameUser">
                     </div>
                     <div class="input-u col-12">
-                        <input class="col-12" type="email" placeholder="Teléfono">
+                        <input class="col-12" type="number" placeholder="Teléfono" ng-model="phoneUser">
                     </div>
                     <div class="input-u col-12">
-                        <input class="col-12" type="password" placeholder="Contraseña">
+                        <input class="col-12" type="password" placeholder="Contraseña" ng-model="passwordUser">
                     </div>
                     <div class="col-12" style="align-content: end;align-items: end;text-align: end">
-                        <button type="button" class="btn btn-primary pull-right">Guardar</button>
+                        <button type="button" class="btn btn-primary pull-right" ng-click="sendUser()">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -152,45 +153,41 @@
                     <h2><b>Crear nuevo bloque por defecto</b></h2>
                 </div>
                 <div class="card-body">
+                    <p style="font-size: 12px"><b>Compañia:</b></p>
                     <div class="input-u col-12">
                         <div class="btn-group col-12">
                             <button class="btn-text col-10" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                Compañia
+                                {{selectedCia.nombre}}
                             </button>
                             <button type="button" class="dropdown-toggle toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu">
-                            <span class="dropdown-item">
-                                TODO: Cia list item</span>
-                                <span class="dropdown-item">
-                                TODO: Cia list item</span>
+                            <span class="dropdown-item" ng-repeat="(key,value) in cias" ng-click="setSelectedCia($index)">
+                                {{value.nombre}}</span>
                             </div>
                         </div>
                     </div>
+                    <br>
+                    <p style="font-size: 12px"><b>Datos del bloque:</b></p>
                     <div class="input-u col-12">
-                        <input class="col-12" type="text" placeholder="Nombre">
+                        <input class="col-12" type="text" placeholder="Nombre" ng-model="nameBlock">
                     </div>
                     <div class="input-u col-12">
-                        <input class="col-12" type="text" placeholder="Dirección">
-                    </div>
-                    <div class="input-u col-12">
-                        <input class="col-12" type="text" placeholder="Telefono">
+                        <input class="col-12" type="text" placeholder="Descripción" ng-model="descBlock">
                     </div>
                     <div class="col-12">
                         <div class="row">
                         <span class="custom-file-upload col-3" onclick="document.getElementById('selectedFile').click();">
-                            <input type="file" id="selectedFile" accept="image/x-png,image/gif,image/jpeg" onchange="readURL(this);"/>
+                            <input type="file" id="selectedFile" accept="image/x-png,image/gif,image/jpeg" onchange="readURLBlock(this);"/>
                             <i class="fas fa-upload fa-2x"></i>
                             <p>Agregar archivo</p>
                         </span>
-
-                            <!--<div class="col-3" ng-repeat="(key,value) in pendingForCreationImages">
-                                <img src="{{value}}" alt="" height="80" width="80" style="margin-top: 10px; padding: 2px">-->
+                            <img src="{{blockImageToSend}}" alt="" height="80" width="80" style="margin-top: 10px; padding: 2px" class="col-3">
                         </div>
                     </div>
                     <div class="col-12" style="align-content: end;align-items: end;text-align: end">
-                        <button type="button" class="btn btn-primary pull-right">Guardar</button>
+                        <button type="button" class="btn btn-primary pull-right" ng-click="sendBlock()">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -204,45 +201,45 @@
                     <h2><b>Crear nueva area por defecto</b></h2>
                 </div>
                 <div class="card-body">
+                    <p style="font-size: 12px"><b>Compañia:</b></p>
                     <div class="input-u col-12">
                         <div class="btn-group col-12">
                             <button class="btn-text col-10" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                Compañia
+                                {{selectedCia.nombre}}
                             </button>
                             <button type="button" class="dropdown-toggle toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu">
-                            <span class="dropdown-item">
-                                TODO: Cia list item</span>
-                                <span class="dropdown-item">
-                                TODO: Cia list item</span>
+                            <span class="dropdown-item" ng-repeat="(key,value) in cias" ng-click="setSelectedCia($index)">
+                                {{value.nombre}}</span>
                             </div>
                         </div>
                     </div>
+                    <br>
+                    <p style="font-size: 12px"><b>Datos de la zona:</b></p>
                     <div class="input-u col-12">
-                        <input class="col-12" type="text" placeholder="Nombre">
+                        <input class="col-12" type="text" placeholder="Nombre" ng-model="nameZone">
                     </div>
                     <div class="input-u col-12">
-                        <input class="col-12" type="text" placeholder="Dirección">
+                        <input class="col-12" type="text" placeholder="Descripción" ng-model="descZone">
                     </div>
                     <div class="input-u col-12">
-                        <input class="col-12" type="text" placeholder="Telefono">
+                        <input class="col-12" type="text" placeholder="Tipo" ng-model="typeZone">
                     </div>
+                    <p style="font-size: 10px">Tipos: 1, 2 o 3</p>
                     <div class="col-12">
                         <div class="row">
-                        <span class="custom-file-upload col-3" onclick="document.getElementById('selectedFile').click();">
-                            <input type="file" id="selectedFileArea" accept="image/x-png,image/gif,image/jpeg" onchange="readURL(this);"/>
+                        <span class="custom-file-upload col-3" onclick="document.getElementById('selectedFile2').click();">
+                            <input type="file" id="selectedFile2" accept="image/x-png,image/gif,image/jpeg" onchange="readURLZone(this);"/>
                             <i class="fas fa-upload fa-2x"></i>
                             <p>Agregar archivo</p>
                         </span>
-
-                            <!--<div class="col-3" ng-repeat="(key,value) in pendingForCreationImages">
-                                <img src="{{value}}" alt="" height="80" width="80" style="margin-top: 10px; padding: 2px">-->
+                            <img src="{{zoneImageToSend}}" alt="" height="80" width="80" style="margin-top: 10px; padding: 2px" class="col-3">
                         </div>
                     </div>
                     <div class="col-12" style="align-content: end;align-items: end;text-align: end">
-                        <button type="button" class="btn btn-primary pull-right">Guardar</button>
+                        <button type="button" class="btn btn-primary pull-right" ng-click="sendZone()">Guardar</button>
                     </div>
                 </div>
             </div>

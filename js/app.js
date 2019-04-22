@@ -866,7 +866,10 @@ app.controller("DashboardController",function ($scope,$http) {
         $scope.pendingForCreationType = 0;
         $scope.pendingForCreationImages = [];
         $scope.pendingForCreationTypeText = "Tipo de pendiente";
-        $scope.pendingForCreationTypeImg = ""
+        $scope.pendingForCreationTypeImg = "";
+
+        $('#newPendingModal').hide();
+        $(".modal-backdrop").remove();
     };
 
     /**
@@ -1177,7 +1180,7 @@ app.controller("DashboardController",function ($scope,$http) {
             alertify.error("Lo sentimos, ha ocurrido un error en el servidor");
         });
     }
-    
+
     /**
      * Gets the users from the cia
      * @param idCia
@@ -1356,14 +1359,31 @@ app.controller("DashboardController",function ($scope,$http) {
             url: url,
             data:data
         };
-        console.log("DATA",data);
         $http(req).then(function successCallback(response) {
             // this callback will be called asynchronously
             // when the response is available
-            console.log("Response",response);
             let success = response.data.ans;
             if(success){
-                //TODO
+                let block = response.data.body;
+                let blockResponse = {
+                    id: block.PK_BLOQUE,
+                    type: 0,
+                    posx: block.posx,
+                    posy: block.posy,
+                    name: block.nombre,
+                    description: block.descripcion,
+                    image: block.rutaImage,
+                    total_pendings: block.num_pendientes,
+                };
+                $scope.selectedZone.blocks.push(blockResponse);
+                addItemAlready(blockResponse.posx,blockResponse.posy,blockResponse,0);
+                $scope.itemForCreationName = "";
+                $scope.itemForCreationDescription = "";
+                $scope.selectedBlock = blockResponse;
+                getPendingsOfBlock($scope.selectedBlock.id);
+
+                $('#newItemModal').hide();
+                $(".modal-backdrop").remove();
             }else{
                 alertify.error(response.data.error);
             }
@@ -1744,10 +1764,36 @@ app.controller("ReportsController",function ($scope,$http) {
     $scope.loading = true;
     $scope.isSelected = false;
     $scope.areas = [];
+    $scope.categogies = [
+        {
+            id: -1,
+            name: "Todas las categorias",
+        },
+        {
+            id: 1,
+            name: "Seguridad",
+        },
+        {
+            id: 2,
+            name: "Procesos",
+        },
+        {
+            id: 3,
+            name: "Calidad",
+        },
+        {
+            id: 4,
+            name: "Generales",
+        },
+    ];
     $scope.selectedArea = {
         id: -1,
         name: "Todas las areas",
         description: ""
+    };
+    $scope.selectedCategory = {
+        id: -1,
+        name: "Todas las categorias",
     };
     $scope.pendings = [];
     $scope.selectedPending = {};
@@ -1785,6 +1831,48 @@ app.controller("ReportsController",function ($scope,$http) {
     // -----------------------------------------------------------------------------------------------------------------
     // Actions
     // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * Side bar options
+     */
+    $scope.onStatsOption = function(){
+        let filterSection = document.getElementById("filter-selector");
+        let reportsOptionSection = document.getElementById("reports-filter");
+        let statsOptionSection = document.getElementById("stats-label");
+        let reportsSection = document.getElementById("reports");
+        let singleReportSection = document.getElementById("single-report");
+        let statsSection = document.getElementById("stats");
+
+
+        statsOptionSection.setAttribute("class","row selected");
+        reportsOptionSection.setAttribute("class","row");
+        filterSection.setAttribute("class","inactive");
+        statsSection.setAttribute("class","row");
+        reportsSection.setAttribute("class","col-12 inactive");
+        singleReportSection.setAttribute("class","col-3 offset-9 single-report inactive");
+
+    };
+
+    $scope.onReportsOption = function(){
+        let filterSection = document.getElementById("filter-selector");
+        let reportsOptionSection = document.getElementById("reports-filter");
+        let statsOptionSection = document.getElementById("stats-label");
+        let reportsSection = document.getElementById("reports");
+        let singleReportSection = document.getElementById("single-report");
+        let statsSection = document.getElementById("stats");
+
+
+        statsOptionSection.setAttribute("class","row");
+        reportsOptionSection.setAttribute("class","row selected");
+        filterSection.setAttribute("class","col-12");
+        statsSection.setAttribute("class","inactive");
+        reportsSection.setAttribute("class","col-12");
+        singleReportSection.setAttribute("class","col-3 offset-9 single-report");
+
+    };
+
+    /**
+     * Reports filters
+     */
     $scope.onAreaSelected = function (index) {
         if ($scope.areas.length > 0) {
             $scope.loading = true;
@@ -1797,6 +1885,27 @@ app.controller("ReportsController",function ($scope,$http) {
                 } else {
                     //Get the pendings of the selected area
                     getPendingsByArea($scope.selectedArea.id);
+                }
+            }
+            $scope.loading = false;
+        }else{
+            alertify.error("Ha ocurrido un error inesperado, por favor comuniquese con soporte técnico");
+        }
+    };
+
+    $scope.onCatSelected = function (index) {
+        if ($scope.areas.length > 0) {
+            $scope.loading = true;
+            $scope.selectedCategory = $scope.categogies[index];
+            if($scope.selectedCategory) {
+                if($scope.selectedArea) {
+                    if ($scope.selectedArea.id == -1) {
+                        //Get the pendings of the cia
+                        getsPendingsByCia($scope.user.id_cia);
+                    } else {
+                        //Get the pendings of the selected area
+                        getPendingsByArea($scope.selectedArea.id);
+                    }
                 }
             }
             $scope.loading = false;
@@ -1837,7 +1946,7 @@ app.controller("ReportsController",function ($scope,$http) {
         if(!$scope.completePendingComment || $scope.completePendingComment == ""){
             alertify.error("Por favor añada un comentario para completar el pendiente");
         }else{
-            //TODO Send the pending update
+            sendComment();
         }
     };
 
@@ -1846,13 +1955,91 @@ app.controller("ReportsController",function ($scope,$http) {
     // -----------------------------------------------------------------------------------------------------------------
 
     function updatePending() {
-        
+        $scope.loading = true;
+        let url = "http://pengraf.com.co/pengraf/v1/api/pendientes/";
+        let data = {
+            activo: "1",
+            FK_ID_BLOQUE: $scope.selectedPending.FK_ID_BLOQUE,
+            FK_ID_ZONA: $scope.selectedPending.FK_ID_ZONA,
+            FK_ID_CREADOR: $scope.selectedPending.owner_id,
+            titulo: $scope.selectedPending.name,
+            descripcion: $scope.selectedPending.description,
+            responsableUserName: $scope.selectedPending.responsable_username,
+            responsableID: $scope.selectedPending.responsable_id,
+            categoria: $scope.selectedPending.type,
+            fechaLimite: $scope.selectedPending.end_date,
+            fechaCompletado: getToday(),
+            creadorUserName: $scope.selectedPending.owner_username,
+            FK_ID_AREA: $scope.selectedPending.FK_ID_AREA,
+            FK_ID_EMPRESA: $scope.user.id_cia,
+            estado: "1",
+            PK_PENDIENTE: $scope.selectedPending.id
+        };
+        let req = {
+            method: 'PUT',
+            url: url,
+            data:data
+        };
+
+        $http(req).then(function successCallback(response) {
+            // this callback will be called asynchronously
+            // when the response is available
+            let success = response.data.ans;
+            if(success){
+                $scope.selectedPending.state = "1";
+                $scope.selectedPending.state_class = "completed";
+                $scope.completePendingComment = "";
+                $scope.completedPendingImages = "";
+                //$('#completePendingModal').hide();
+                //$(".modal-backdrop").remove();
+                jQuery("#completePendingModal").modal("hide");
+            }else{
+                alertify.error(response.data.error);
+            }
+            $scope.loading = false;
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            console.log("ERROR",response);
+            alertify.error("Lo sentimos, ha ocurrido un error en el servidor");
+        });
+
+
     }
 
     function sendComment() {
-        //TODO
+        $scope.loading = true;
+        let url = "http://pengraf.com.co/pengraf/v1/api/pendientes/close_pending";
+        let data = {
+            idpending: $scope.selectedPending.id,
+            comentario: $scope.completePendingComment,
+            image: $scope.completedPendingImages
+        };
+        let req = {
+            method: 'POST',
+            url: url,
+            data:data
+        };
+
+        console.log("Data",data);
+        $http(req).then(function successCallback(response) {
+            // this callback will be called asynchronously
+            // when the response is available
+            let success = response.data.ans;
+            if(success){
+                updatePending()
+            }else{
+                alertify.error(response.data.error);
+                $scope.loading = false;
+            }
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            console.log("ERROR",response);
+            alertify.error("Lo sentimos, ha ocurrido un error en el servidor");
+        });
     }
-    
+
     /**
      * Reset the modal values
      */
@@ -1943,58 +2130,124 @@ app.controller("ReportsController",function ($scope,$http) {
             if(success){
                 let body = response.data.body;
                 body.forEach(function (pen) {
-                    var state_class = "";
-                    var type_class = "";
-                    switch (pen.estado) {
-                        case "1":
-                            state_class = "completed";
-                            break;
-                        case "2":
-                            state_class = "caducated";
-                            break;
-                        case "3":
-                            state_class = "onprocess";
-                            break;
-                    }
 
-                    switch (pen.categoria) {
-                        case "1":
-                            type_class = SECURITY;
-                            break;
-                        case "2":
-                            type_class = PROCESS;
-                            break;
-                        case "3":
-                            type_class = QUALITY;
-                            break;
-                        case "4":
-                            type_class = GENERALS;
-                            break;
-                    }
-                    let pending = {
-                        id: pen.PK_PENDIENTE,
-                        state: pen.estado,
-                        state_class: state_class,
-                        responsable_id: pen.responsableID,
-                        responsable_username: pen.responsableUserName,
-                        owner_id: body.FK_ID_CREADOR,
-                        owner_username: "",
-                        name: pen.titulo,
-                        description: pen.descripcion,
-                        type: pen.categoria,
-                        type_class: type_class,
-                        end_date: pen.fechaLimite,
-                        showing_pics: false,
-                        photos:[]
-                    };
-                    let photos = pen.fotos;
-                    photos.forEach(function (photo) {
-                        let ph = {
-                            image:photo.urlFoto
+                    if($scope.selectedCategory.id == -1){
+                        var state_class = "";
+                        var type_class = "";
+                        switch (pen.estado) {
+                            case "1":
+                                state_class = "completed";
+                                break;
+                            case "2":
+                                state_class = "caducated";
+                                break;
+                            case "3":
+                                state_class = "onprocess";
+                                break;
+                        }
+
+                        switch (pen.categoria) {
+                            case "1":
+                                type_class = SECURITY;
+                                break;
+                            case "2":
+                                type_class = PROCESS;
+                                break;
+                            case "3":
+                                type_class = QUALITY;
+                                break;
+                            case "4":
+                                type_class = GENERALS;
+                                break;
+                        }
+                        let pending = {
+                            id: pen.PK_PENDIENTE,
+                            state: pen.estado,
+                            state_class: state_class,
+                            responsable_id: pen.responsableID,
+                            responsable_username: pen.responsableUserName,
+                            owner_id: pen.FK_ID_CREADOR,
+                            owner_username: pen.creadorUserName,
+                            name: pen.titulo,
+                            description: pen.descripcion,
+                            type: pen.categoria,
+                            type_class: type_class,
+                            end_date: pen.fechaLimite,
+                            showing_pics: false,
+                            FK_ID_BLOQUE: pen.FK_ID_BLOQUE,
+                            FK_ID_ZONA: pen.FK_ID_ZONA,
+                            FK_ID_AREA: pen.FK_ID_AREA,
+                            fechaCreacion: pen.fechaCreacion,
+                            photos:[]
                         };
-                        pending.photos.push(ph);
-                    });
-                    $scope.pendings.push(pending);
+                        let photos = pen.fotos;
+                        photos.forEach(function (photo) {
+                            let ph = {
+                                image:photo.urlFoto
+                            };
+                            pending.photos.push(ph);
+                        });
+                        $scope.pendings.push(pending);
+                    }else{
+                        if(pen.categoria == $scope.selectedCategory.id){
+                            var state_class = "";
+                            var type_class = "";
+                            switch (pen.estado) {
+                                case "1":
+                                    state_class = "completed";
+                                    break;
+                                case "2":
+                                    state_class = "caducated";
+                                    break;
+                                case "3":
+                                    state_class = "onprocess";
+                                    break;
+                            }
+
+                            switch (pen.categoria) {
+                                case "1":
+                                    type_class = SECURITY;
+                                    break;
+                                case "2":
+                                    type_class = PROCESS;
+                                    break;
+                                case "3":
+                                    type_class = QUALITY;
+                                    break;
+                                case "4":
+                                    type_class = GENERALS;
+                                    break;
+                            }
+                            let pending = {
+                                id: pen.PK_PENDIENTE,
+                                state: pen.estado,
+                                state_class: state_class,
+                                responsable_id: pen.responsableID,
+                                responsable_username: pen.responsableUserName,
+                                owner_id: pen.FK_ID_CREADOR,
+                                owner_username: pen.creadorUserName,
+                                name: pen.titulo,
+                                description: pen.descripcion,
+                                type: pen.categoria,
+                                type_class: type_class,
+                                end_date: pen.fechaLimite,
+                                showing_pics: false,
+                                FK_ID_BLOQUE: pen.FK_ID_BLOQUE,
+                                FK_ID_ZONA: pen.FK_ID_ZONA,
+                                FK_ID_AREA: pen.FK_ID_AREA,
+                                fechaCreacion: pen.fechaCreacion,
+                                photos:[]
+                            };
+                            let photos = pen.fotos;
+                            photos.forEach(function (photo) {
+                                let ph = {
+                                    image:photo.urlFoto
+                                };
+                                pending.photos.push(ph);
+                            });
+                            $scope.pendings.push(pending);
+                        }
+                    }
                 });
                 $scope.onPendingSelected(0);
             }else{
@@ -2037,58 +2290,124 @@ app.controller("ReportsController",function ($scope,$http) {
             if(success){
                 let body = response.data.body;
                 body.forEach(function (pen) {
-                    var state_class = "";
-                    var type_class = "";
-                    switch (pen.estado) {
-                        case "1":
-                            state_class = "completed";
-                            break;
-                        case "2":
-                            state_class = "caducated";
-                            break;
-                        case "3":
-                            state_class = "onprocess";
-                            break;
+                    if($scope.selectedCategory.id == -1){
+                        var state_class = "";
+                        var type_class = "";
+                        switch (pen.estado) {
+                            case "1":
+                                state_class = "completed";
+                                break;
+                            case "2":
+                                state_class = "caducated";
+                                break;
+                            case "3":
+                                state_class = "onprocess";
+                                break;
+                        }
+
+                        switch (pen.categoria) {
+                            case "1":
+                                type_class = SECURITY;
+                                break;
+                            case "2":
+                                type_class = PROCESS;
+                                break;
+                            case "3":
+                                type_class = QUALITY;
+                                break;
+                            case "4":
+                                type_class = GENERALS;
+                                break;
+                        }
+                        let pending = {
+                            id: pen.PK_PENDIENTE,
+                            state: pen.estado,
+                            state_class: state_class,
+                            responsable_id: pen.responsableID,
+                            responsable_username: pen.responsableUserName,
+                            owner_id: pen.FK_ID_CREADOR,
+                            owner_username: pen.creadorUserName,
+                            name: pen.titulo,
+                            description: pen.descripcion,
+                            type: pen.categoria,
+                            type_class: type_class,
+                            end_date: pen.fechaLimite,
+                            showing_pics: false,
+                            FK_ID_BLOQUE: pen.FK_ID_BLOQUE,
+                            FK_ID_ZONA: pen.FK_ID_ZONA,
+                            FK_ID_AREA: pen.FK_ID_AREA,
+                            fechaCreacion: pen.fechaCreacion,
+                            photos:[]
+                        };
+                        let photos = pen.fotos;
+                        photos.forEach(function (photo) {
+                            let ph = {
+                                image:photo.urlFoto
+                            };
+                            pending.photos.push(ph);
+                        });
+                        $scope.pendings.push(pending);
+                    }else{
+                        if($scope.selectedCategory.id == pen.categoria){
+                            var state_class = "";
+                            var type_class = "";
+                            switch (pen.estado) {
+                                case "1":
+                                    state_class = "completed";
+                                    break;
+                                case "2":
+                                    state_class = "caducated";
+                                    break;
+                                case "3":
+                                    state_class = "onprocess";
+                                    break;
+                            }
+
+                            switch (pen.categoria) {
+                                case "1":
+                                    type_class = SECURITY;
+                                    break;
+                                case "2":
+                                    type_class = PROCESS;
+                                    break;
+                                case "3":
+                                    type_class = QUALITY;
+                                    break;
+                                case "4":
+                                    type_class = GENERALS;
+                                    break;
+                            }
+                            let pending = {
+                                id: pen.PK_PENDIENTE,
+                                state: pen.estado,
+                                state_class: state_class,
+                                responsable_id: pen.responsableID,
+                                responsable_username: pen.responsableUserName,
+                                owner_id: pen.FK_ID_CREADOR,
+                                owner_username: pen.creadorUserName,
+                                name: pen.titulo,
+                                description: pen.descripcion,
+                                type: pen.categoria,
+                                type_class: type_class,
+                                end_date: pen.fechaLimite,
+                                showing_pics: false,
+                                FK_ID_BLOQUE: pen.FK_ID_BLOQUE,
+                                FK_ID_ZONA: pen.FK_ID_ZONA,
+                                FK_ID_AREA: pen.FK_ID_AREA,
+                                fechaCreacion: pen.fechaCreacion,
+                                photos:[]
+                            };
+                            let photos = pen.fotos;
+                            photos.forEach(function (photo) {
+                                let ph = {
+                                    image:photo.urlFoto
+                                };
+                                pending.photos.push(ph);
+                            });
+                            $scope.pendings.push(pending);
+                        }
                     }
 
-                    switch (pen.categoria) {
-                        case "1":
-                            type_class = SECURITY;
-                            break;
-                        case "2":
-                            type_class = PROCESS;
-                            break;
-                        case "3":
-                            type_class = QUALITY;
-                            break;
-                        case "4":
-                            type_class = GENERALS;
-                            break;
-                    }
-                    let pending = {
-                        id: pen.PK_PENDIENTE,
-                        state: pen.estado,
-                        state_class: state_class,
-                        responsable_id: pen.responsableID,
-                        responsable_username: pen.responsableUserName,
-                        owner_id: body.FK_ID_CREADOR,
-                        owner_username: "",
-                        name: pen.titulo,
-                        description: pen.descripcion,
-                        type: pen.categoria,
-                        type_class: type_class,
-                        end_date: pen.fechaLimite,
-                        showing_pics: false,
-                        photos:[]
-                    };
-                    let photos = pen.fotos;
-                    photos.forEach(function (photo) {
-                        let ph = {
-                            image:photo.urlFoto
-                        };
-                        pending.photos.push(ph);
-                    });
-                    $scope.pendings.push(pending);
                 });
                 $scope.onPendingSelected(0);
             }else{
